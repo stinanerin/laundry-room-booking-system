@@ -133,7 +133,9 @@ const deleteBooking = async (listId, item) => {
 
 const addData = async (route, data) => {
     try {
-        const res = await axios.post(`${API_BASE_URL}${route}`, data);
+        const res = await axios.post(`${API_BASE_URL}${route}`, data, {
+            withCredentials: true,
+        });
         if (res.status !== 200) {
             console.log(res.response.statusText);
             throw new Error(res.response.statusText);
