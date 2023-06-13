@@ -3,15 +3,8 @@ const API_BASE_URL = "https://express-booking-system-backend.herokuapp.com/api/v
 
 const fetchData = async (route, method = "GET", data = null) => {
     try {
-        const res = await axios({
-            method: method,
-            url: `${API_BASE_URL}${route}`,
-            data: data,
-            withCredentials: true, // Include credentials (cookies) with the request
-        });
-        // const res = await axios.get(`${API_BASE_URL}${route}`, {
-        //     withCredentials: true, // Include cookies in the request
-        // });
+        const res = await axios.get(`${API_BASE_URL}${route}`);
+        
         console.log(res);
         if (!res.ok) {
             console.log(res.response.statusText);
