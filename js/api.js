@@ -1,10 +1,12 @@
 const API_BASE_URL = "https://express-booking-system-backend.herokuapp.com/api/v.1/";
 // const API_BASE_URL = "https://nackademin-item-tracker.herokuapp.com/"
 
-const fetchData = async (route, method = "GET", data = null) => {
+const fetchData = async (route) => {
     try {
-        const res = await axios.get(`${API_BASE_URL}${route}`);
-        
+        const res = await axios.get(`${API_BASE_URL}${route}`, {
+            withCredentials: true,
+        });
+
         console.log(res);
         if (!res.ok) {
             console.log(res.response.statusText);
