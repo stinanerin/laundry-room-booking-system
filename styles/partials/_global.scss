@@ -1,0 +1,53 @@
+// * {
+//     outline: 1px solid pink;
+// }
+html {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    background-color: $accent-300;
+    background-image: radial-gradient( circle 610px at 5.2% 51.6%,  rgba(5,8,114,1) 0%, rgba(7,3,53,1) 97.5% );
+}
+main {
+    padding: 0 1rem;
+}
+.main {
+    max-width: 33rem;
+    margin: auto;
+}
+i {
+    color: $p-white;
+}
+.hidden {
+    display: none;
+}
+.link {
+    text-decoration: underline;
+    color: $accent-100;
+    cursor: pointer;
+}
+input, input:active, input:focus, 
+input:-webkit-autofill, 
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active, input[data-autocompleted], select{
+    &:not([type="radio"]) {
+
+        @include element-gradient($transparent-50, $transparent-100, $p-white, $body);
+        /* Almost working autocomplete styling */
+        transition: background-color 600000s 0s, color 600000s 0s;
+    }
+}
+input:active, input:focus, input:-webkit-autofill:focus, input:-webkit-autofill:active, select:hover {
+    &:not([type="radio"]) {
+        @include glow;
+    }
+}
+
+input[data-autocompleted] {
+    @include element-gradient($transparent-50, $transparent-100, $p-white, $body);
+
+}
+

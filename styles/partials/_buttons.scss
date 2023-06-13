@@ -1,0 +1,35 @@
+.button {
+    border-radius: $radius-max;
+    padding: 0.5rem 1rem;
+    min-width: 12rem;
+    border: none;
+    font-weight: 700;
+    &.primary-btn {
+        background-color: $accent-100;
+        color: $p-white;
+        &:hover {
+            &:not(&:disabled, &.no-hover ) {
+                @include glow($accent-100);
+                background-color: transparent;
+                cursor: none;
+            }  
+        }
+    }
+    &.danger-btn {
+        background-color: $danger-500;
+        color: $p-white;
+        &:hover {
+            &:not(&:disabled, &.no-hover ) {
+                background-color: transparent;
+                border: 2px solid $danger-500;
+            }  
+        }
+    }
+    &:disabled {
+        background-color: $disabled-500;
+        color: $disabled-50;
+    }
+    &.no-hover {
+        cursor: not-allowed;
+    }
+}

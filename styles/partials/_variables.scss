@@ -1,0 +1,31 @@
+// Fonts
+$heading-primary: 'Poppins', sans-serif;
+$body: system-ui;
+
+// Colors
+$p-black: hsl(0, 0%, 0%);
+$p-white: hsl(0, 0%, 100%);
+
+$danger-500: hsl(354, 100%, 51%);
+$danger-50: hsl(355,70%,91%);
+
+$accent-300: #2d3d6a;
+$accent-100: #909ec9;
+
+$booked: rgb(173, 97, 227);
+
+$transparent-50: rgba(255, 255, 255, 0.46);
+$transparent-100: rgba(253, 253, 253, 0);
+
+$disabled-500:rgb(112, 112, 112);
+$disabled-50: rgb(231, 228, 228);
+
+$radius: 0.5rem;
+$radius-max: 50px;
+
+// Breakpoints - mobile first
+$xs: "width >= 360px";
+$sm: "width >= 576px";
+$md: "width >= 768px";
+$lg: "width >= 992px";
+$xl: "width >= 1200px";

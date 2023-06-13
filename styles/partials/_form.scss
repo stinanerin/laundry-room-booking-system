@@ -1,0 +1,59 @@
+form {
+    input[type="radio"] {
+        margin-right: 0.5rem;
+        /* DISABLED RADIO */
+        &[disabled] {
+            cursor: not-allowed;
+            background-color: $disabled-500;
+            position: relative;
+            height: 13px;
+            width: 13px;
+            box-sizing: border-box;
+            &:after {
+              position: absolute;
+              content: "";
+              display: block;
+              width: 100%;
+              height: 100%;
+              border-radius: $radius-max;
+              background-color: $disabled-500;
+            }
+        }
+        &[disabled] + label {
+            cursor: not-allowed;
+            color: $disabled-50;
+        }
+    }
+    input[type="radio"] + label, .form-text  {
+        color: $p-white;
+    }
+    label {
+        color: $p-white;
+        font-weight: 700;
+        font-family: $heading-primary;
+    }
+    .alert-danger {
+        border-radius: $radius-max;  
+        border-color: $danger-500;
+        color: $danger-500;
+        padding: 0.5rem 1rem;
+        margin: 0;
+        .fa-solid {
+            color: $danger-500;
+        }
+    }
+    .error {
+        color: $danger-500;
+        border-color: $danger-500;
+        -webkit-text-fill-color: $danger-500;
+        box-shadow: 0 0 0px 1000px $danger-500 inset;
+        -webkit-box-shadow: 0 0 0px 1000px $danger-50 inset;
+        &:-webkit-autofill, &:-webkit-autofill:focus,  &:-webkit-autofill:active, &:active, &:focus{ 
+            color: $danger-500;
+            border-color: $danger-500;
+            -webkit-text-fill-color: $danger-500;
+            box-shadow: 0 0 0px 1000px $danger-500 inset;
+            -webkit-box-shadow: 0 0 0px 1000px $danger-50 inset;
+        }
+    }
+}

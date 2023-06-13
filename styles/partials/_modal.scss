@@ -1,0 +1,43 @@
+:modal {
+    max-width: 50ch;
+    border: 0;
+    box-shadow: 0 5px 1rem rgba(0, 0, 0, 0.53);
+    padding: 3rem 2rem;
+    background-color: $accent-100;
+    border-radius: $radius;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    * {
+        color: $p-white;
+    }
+    &::backdrop {
+        backdrop-filter: blur(3px);
+    }
+    .round {
+        background-color: $accent-300;
+        border-radius: $radius-max;
+        width: 5rem;
+        height: 5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .fa-xmark {
+            font-size: 2.5rem;
+        }
+    }
+    p {
+        margin: 0;
+    }
+    .cancel-modal {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        .fa-xmark {
+            font-size: 1.5rem;
+        }
+    }
+}

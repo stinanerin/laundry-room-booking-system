@@ -1,0 +1,41 @@
+
+@mixin element-gradient($t-1, $t-2, $text, $font) {
+    /* fallback for old browsers */
+    background: $p-black ;
+    background: linear-gradient(270deg, $t-1 0%, $t-2 100%);
+    background: -webkit-linear-gradient(270deg, $t-1 0%, $t-2 100%);
+    // background-color: transparent !important;
+
+    border: none;
+    border-radius: $radius-max;
+    -webkit-appearance: none;
+    appearance: none; 
+    font-family: $font;
+    color: $text;
+    font-size: 0.875rem;
+    &::placeholder {
+        font-family: $font;
+        color: $text;
+    }
+    &:not(select) {
+        padding: 0.5rem 1.5rem;
+    }
+}
+
+@mixin glow ($color: $transparent-50) {
+    box-shadow: 
+            inset 0 0 0.75em 0 $color,
+            0 0 1em 0.2em $color;
+    -webkit-box-shadow: 
+        inset 0 0 0.75em 0 $color,
+        0 0 1em 0.2em $color;
+};
+
+@mixin dot($color) {
+    content: "";
+    display: block;
+    width: 0.35rem;
+    height: 0.35rem;
+    background-color: $color;
+    border-radius: $radius-max;
+}

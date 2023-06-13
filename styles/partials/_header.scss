@@ -1,0 +1,30 @@
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .header {
+        // background-color: purple;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100px;
+        width: 100%;
+        max-width: 90rem;
+        padding: 0 1rem;
+        .header-child {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            p {
+                margin: 0;
+                padding: 0 0.5rem;
+            }
+            button {
+                img {
+                    padding-bottom: 3px;
+                    width: 1rem;
+                }
+            }
+        }
+    }
+}

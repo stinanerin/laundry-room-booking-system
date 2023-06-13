@@ -1,0 +1,366 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css") layer(bootstrap);
+@layer bootstrap, special-styles;
+@layer special-styles {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    color: hsl(0deg, 0%, 100%);
+  }
+  body {
+    font-family: system-ui;
+    color: hsl(0deg, 0%, 100%);
+    font-size: 0.8rem;
+  }
+  html {
+    height: 100%;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    background-color: #2d3d6a;
+    background-image: radial-gradient(circle 610px at 5.2% 51.6%, rgb(5, 8, 114) 0%, rgb(7, 3, 53) 97.5%);
+  }
+  main {
+    padding: 0 1rem;
+  }
+  .main {
+    max-width: 33rem;
+    margin: auto;
+  }
+  i {
+    color: hsl(0deg, 0%, 100%);
+  }
+  .hidden {
+    display: none;
+  }
+  .link {
+    text-decoration: underline;
+    color: #909ec9;
+    cursor: pointer;
+  }
+  input:not([type=radio]), input:active:not([type=radio]), input:focus:not([type=radio]),
+input:-webkit-autofill:not([type=radio]),
+input:-webkit-autofill:focus:not([type=radio]),
+input:-webkit-autofill:active:not([type=radio]), input[data-autocompleted]:not([type=radio]), select:not([type=radio]) {
+    /* fallback for old browsers */
+    background: hsl(0deg, 0%, 0%);
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0.46) 0%, rgba(253, 253, 253, 0) 100%);
+    background: -webkit-linear-gradient(270deg, rgba(255, 255, 255, 0.46) 0%, rgba(253, 253, 253, 0) 100%);
+    border: none;
+    border-radius: 50px;
+    -webkit-appearance: none;
+    appearance: none;
+    font-family: system-ui;
+    color: hsl(0deg, 0%, 100%);
+    font-size: 0.875rem;
+    /* Almost working autocomplete styling */
+    -webkit-transition: background-color 600000s 0s, color 600000s 0s;
+    transition: background-color 600000s 0s, color 600000s 0s;
+  }
+  input:not([type=radio])::placeholder, input:active:not([type=radio])::placeholder, input:focus:not([type=radio])::placeholder,
+input:-webkit-autofill:not([type=radio])::placeholder,
+input:-webkit-autofill:focus:not([type=radio])::placeholder,
+input:-webkit-autofill:active:not([type=radio])::placeholder, input[data-autocompleted]:not([type=radio])::placeholder, select:not([type=radio])::placeholder {
+    font-family: system-ui;
+    color: hsl(0deg, 0%, 100%);
+  }
+  input:not([type=radio]):not(select), input:active:not([type=radio]):not(select), input:focus:not([type=radio]):not(select),
+input:-webkit-autofill:not([type=radio]):not(select),
+input:-webkit-autofill:focus:not([type=radio]):not(select),
+input:-webkit-autofill:active:not([type=radio]):not(select), input[data-autocompleted]:not([type=radio]):not(select), select:not([type=radio]):not(select) {
+    padding: 0.5rem 1.5rem;
+  }
+  input:active:not([type=radio]), input:focus:not([type=radio]), input:-webkit-autofill:focus:not([type=radio]), input:-webkit-autofill:active:not([type=radio]), select:hover:not([type=radio]) {
+    box-shadow: inset 0 0 0.75em 0 rgba(255, 255, 255, 0.46), 0 0 1em 0.2em rgba(255, 255, 255, 0.46);
+    -webkit-box-shadow: inset 0 0 0.75em 0 rgba(255, 255, 255, 0.46), 0 0 1em 0.2em rgba(255, 255, 255, 0.46);
+  }
+  input[data-autocompleted] {
+    /* fallback for old browsers */
+    background: hsl(0deg, 0%, 0%);
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0.46) 0%, rgba(253, 253, 253, 0) 100%);
+    background: -webkit-linear-gradient(270deg, rgba(255, 255, 255, 0.46) 0%, rgba(253, 253, 253, 0) 100%);
+    border: none;
+    border-radius: 50px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+         appearance: none;
+    font-family: system-ui;
+    color: hsl(0deg, 0%, 100%);
+    font-size: 0.875rem;
+  }
+  input[data-autocompleted]::-moz-placeholder {
+    font-family: system-ui;
+    color: hsl(0deg, 0%, 100%);
+  }
+  input[data-autocompleted]:-ms-input-placeholder {
+    font-family: system-ui;
+    color: hsl(0deg, 0%, 100%);
+  }
+  input[data-autocompleted]::placeholder {
+    font-family: system-ui;
+    color: hsl(0deg, 0%, 100%);
+  }
+  input[data-autocompleted]:not(select) {
+    padding: 0.5rem 1.5rem;
+  }
+  .button {
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    min-width: 12rem;
+    border: none;
+    font-weight: 700;
+  }
+  .button.primary-btn {
+    background-color: #909ec9;
+    color: hsl(0deg, 0%, 100%);
+  }
+  .button.primary-btn:hover:not(.button.primary-btn:hover:disabled, .button.primary-btn:hover.no-hover) {
+    box-shadow: inset 0 0 0.75em 0 #909ec9, 0 0 1em 0.2em #909ec9;
+    -webkit-box-shadow: inset 0 0 0.75em 0 #909ec9, 0 0 1em 0.2em #909ec9;
+    background-color: transparent;
+    cursor: none;
+  }
+  .button.danger-btn {
+    background-color: hsl(354deg, 100%, 51%);
+    color: hsl(0deg, 0%, 100%);
+  }
+  .button.danger-btn:hover:not(.button.danger-btn:hover:disabled, .button.danger-btn:hover.no-hover) {
+    background-color: transparent;
+    border: 2px solid hsl(354deg, 100%, 51%);
+  }
+  .button:disabled {
+    background-color: rgb(112, 112, 112);
+    color: rgb(231, 228, 228);
+  }
+  .button.no-hover {
+    cursor: not-allowed;
+  }
+  .calendar {
+    border-radius: 0.5rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.133) 0%, rgba(255, 255, 255, 0) 100%);
+  }
+  .calendar .row {
+    border-radius: 0.5rem;
+  }
+  .calendar .day {
+    position: relative;
+    height: 30px;
+    width: 30px;
+    margin: 0.2rem;
+    border-radius: 50px;
+  }
+  .calendar .day:hover:not(.deactivated), .calendar .day.active, .calendar .day.today:not(.deactivated) {
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 1rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.133) 0%, rgba(255, 255, 255, 0.113) 100%);
+  }
+  @media (width >= 360px) {
+    .calendar .day:hover:not(.deactivated), .calendar .day.active, .calendar .day.today:not(.deactivated) {
+      min-width: 40px;
+    }
+  }
+  @media (width >= 576px) {
+    .calendar .day:hover:not(.deactivated), .calendar .day.active, .calendar .day.today:not(.deactivated) {
+      min-width: 50px;
+    }
+  }
+  .calendar .day:hover:not(.deactivated), .calendar .day.active {
+    box-shadow: inset 0 0 0.75em 0 #909ec9, 0 0 1em 0 #909ec9;
+    -webkit-box-shadow: inset 0 0 0.75em 0 #909ec9, 0 0 1em 0 #909ec9;
+  }
+  .calendar .day.deactivated {
+    color: #909ec9;
+    background-color: rgba(128, 128, 128, 0.2);
+  }
+  .calendar .day.booked:after {
+    content: "";
+    display: block;
+    width: 0.35rem;
+    height: 0.35rem;
+    background-color: rgb(173, 97, 227);
+    border-radius: 50px;
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+  }
+  @media (width >= 360px) {
+    .calendar .day.booked:after {
+      top: 0.4rem;
+      right: 0.3rem;
+    }
+  }
+  @media (width >= 576px) {
+    .calendar .day.booked:after {
+      top: 0.7rem;
+      right: 0.4rem;
+    }
+  }
+  @media (width >= 360px) {
+    .calendar .day {
+      min-height: 40px;
+      margin: 0.5rem;
+    }
+  }
+  @media (width >= 576px) {
+    .calendar .day {
+      min-height: 50px;
+    }
+  }
+  .calendar .weekdays div {
+    padding: 0 0.5rem;
+  }
+  @media (width >= 360px) {
+    .calendar .weekdays div {
+      padding: 0 0.8rem;
+    }
+  }
+  .calendar .weekdays div h3 {
+    font-size: 1rem;
+    border-bottom: 1px solid #909ec9;
+    font-weight: 900;
+    color: #909ec9;
+  }
+  form input[type=radio] {
+    margin-right: 0.5rem;
+    /* DISABLED RADIO */
+  }
+  form input[type=radio][disabled] {
+    cursor: not-allowed;
+    background-color: rgb(112, 112, 112);
+    position: relative;
+    height: 13px;
+    width: 13px;
+    box-sizing: border-box;
+  }
+  form input[type=radio][disabled]:after {
+    position: absolute;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+    background-color: rgb(112, 112, 112);
+  }
+  form input[type=radio][disabled] + label {
+    cursor: not-allowed;
+    color: rgb(231, 228, 228);
+  }
+  form input[type=radio] + label, form .form-text {
+    color: hsl(0deg, 0%, 100%);
+  }
+  form label {
+    color: hsl(0deg, 0%, 100%);
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+  }
+  form .alert-danger {
+    border-radius: 50px;
+    border-color: hsl(354deg, 100%, 51%);
+    color: hsl(354deg, 100%, 51%);
+    padding: 0.5rem 1rem;
+    margin: 0;
+  }
+  form .alert-danger .fa-solid {
+    color: hsl(354deg, 100%, 51%);
+  }
+  form .error {
+    color: hsl(354deg, 100%, 51%);
+    border-color: hsl(354deg, 100%, 51%);
+    -webkit-text-fill-color: hsl(354deg, 100%, 51%);
+    box-shadow: 0 0 0px 1000px hsl(354deg, 100%, 51%) inset;
+    -webkit-box-shadow: 0 0 0px 1000px hsl(355deg, 70%, 91%) inset;
+  }
+  form .error:-webkit-autofill, form .error:-webkit-autofill:focus, form .error:-webkit-autofill:active, form .error:active, form .error:focus {
+    color: hsl(354deg, 100%, 51%);
+    border-color: hsl(354deg, 100%, 51%);
+    -webkit-text-fill-color: hsl(354deg, 100%, 51%);
+    box-shadow: 0 0 0px 1000px hsl(354deg, 100%, 51%) inset;
+    -webkit-box-shadow: 0 0 0px 1000px hsl(355deg, 70%, 91%) inset;
+  }
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  header .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+    max-width: 90rem;
+    padding: 0 1rem;
+  }
+  header .header .header-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  header .header .header-child p {
+    margin: 0;
+    padding: 0 0.5rem;
+  }
+  header .header .header-child button img {
+    padding-bottom: 3px;
+    width: 1rem;
+  }
+  footer {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.233) 100%);
+    height: 150px;
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+  :modal {
+    max-width: 50ch;
+    border: 0;
+    box-shadow: 0 5px 1rem rgba(0, 0, 0, 0.53);
+    padding: 3rem 2rem;
+    background-color: #909ec9;
+    border-radius: 0.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  :modal * {
+    color: hsl(0deg, 0%, 100%);
+  }
+  :modal::-webkit-backdrop {
+    -webkit-backdrop-filter: blur(3px);
+            backdrop-filter: blur(3px);
+  }
+  :modal::backdrop {
+    -webkit-backdrop-filter: blur(3px);
+            backdrop-filter: blur(3px);
+  }
+  :modal .round {
+    background-color: #2d3d6a;
+    border-radius: 50px;
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  :modal .round .fa-xmark {
+    font-size: 2.5rem;
+  }
+  :modal p {
+    margin: 0;
+  }
+  :modal .cancel-modal {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+  }
+  :modal .cancel-modal .fa-xmark {
+    font-size: 1.5rem;
+  }
+}/*# sourceMappingURL=style.css.map */
