@@ -7,8 +7,8 @@ const fetchData = async (route) => {
             withCredentials: true,
         });
 
-        console.log(res);
-        if (!res.ok) {
+        // console.log("fetchData", res);
+        if (res.status !== 200) {
             console.log(res.response.statusText);
             throw new Error(res.statusText);
         }
@@ -17,7 +17,7 @@ const fetchData = async (route) => {
         // arr = await deletePassedBookings(arr);
         // let  objBooking  = arr[arr.length -1];
         // console.log("latest booking", objBooking);
-        return res;
+        return res.data;
         // return arr;
     } catch (error) {
         console.log(error);
@@ -26,6 +26,7 @@ const fetchData = async (route) => {
     }
 };
 
+//todo! fix according to new dtabse
 const deletePassedBookings = async (arr) => {
     const res = arr.map((bookingObj) =>
         /* If date in bookingsArr has passed, relative to todays date - delete it from bookings API.
@@ -85,32 +86,32 @@ const createUser = async (name, email, pwd) => {
     }
 };
 
-const addBooking = async (listId, date) => {
-    try {
-        if (!getItem("user").hasBooking) {
-            const res = await fetch(`${API_BASE_URL}lists/${listId}/items`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    booking: date,
-                    user_id: getItem("user").id,
-                }),
-            });
-            if (!res.ok) {
-                throw new Error(res.statusText);
-            }
-            return res;
-        } else {
-            throw new Error(
-                "You already have a booking, please cancel it or wait until the booked day ahs passed to book a new laundry time."
-            );
-        }
-    } catch (error) {
-        displayModal(error.message);
-    }
-};
+// const addBooking = async (listId, date) => {
+//     try {
+//         if (!getItem("user").hasBooking) {
+//             const res = await fetch(`${API_BASE_URL}lists/${listId}/items`, {
+//                 method: "POST",
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                 },
+//                 body: JSON.stringify({
+//                     booking: date,
+//                     user_id: getItem("user").id,
+//                 }),
+//             });
+//             if (!res.ok) {
+//                 throw new Error(res.statusText);
+//             }
+//             return res;
+//         } else {
+//             throw new Error(
+//                 "You already have a booking, please cancel it or wait until the booked day ahs passed to book a new laundry time."
+//             );
+//         }
+//     } catch (error) {
+//         displayModal(error.message);
+//     }
+// };
 
 const deleteBooking = async (listId, item) => {
     try {
@@ -125,6 +126,7 @@ const deleteBooking = async (listId, item) => {
         }
         return res;
     } catch (error) {
+        console.log(error);
         displayModal(error.message);
     }
 };
@@ -132,6 +134,8 @@ const deleteBooking = async (listId, item) => {
 //! New
 
 const addData = async (route, data) => {
+    console.log(route, data);
+    console.log(data);
     try {
         const res = await axios.post(`${API_BASE_URL}${route}`, data, {
             withCredentials: true,
@@ -144,6 +148,9 @@ const addData = async (route, data) => {
         return res.data;
     } catch (error) {
         console.error(error);
-        return error.response.data;
+        if (error.response) {
+            return error.response.data;
+        }
+        return error.message;
     }
 };

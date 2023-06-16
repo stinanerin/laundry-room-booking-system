@@ -27,7 +27,12 @@ const renderMonthCal = async() => {
     dayGrid.innerHTML = "";
     dayView.innerHTML = "";
 
-    const { bookings, usersBooking } = await fetchBookings(currentList);
+    // const { bookings, usersBooking } = await fetchBookings(currentList);
+    const res = await fetchData("bookings");
+    const response = await fetchData("user/booking");
+
+    const bookings = res.bookings
+    const usersBooking = response.booking.date;
 
     // Updates month header 
     dateHeader.innerHTML =  `<h2>${months[month]} ${year}</h2>`;
@@ -42,10 +47,9 @@ const renderMonthCal = async() => {
             row = createElement("div", "row g-0")
             dayGrid.append(row);
         }
-
         row.append(createElement("li", 
-            `${isDayBooked(usersBooking, year, month, date)} 
-            ${checkIfDayisToday(year, month, date)}
+        `${isDayBooked(usersBooking, year, month, date)} 
+        ${checkIfDayisToday(year, month, date)}
             ${deactivatePassedDates(year, month, date)}
             ${prevMonth ? "prevMonth" : nextMonth ? "nextMonth" : ""}
             day col d-flex justify-content-center align-items-center`, 
@@ -54,20 +58,20 @@ const renderMonthCal = async() => {
     })
 
     // Iniates day view function for each calender button
-    renderDayView(bookings, usersBooking)
+    renderDayView(bookings)
 }
 
-const fetchBookings = async (list) => {
-    // Fetches all bookings from API
-    const bookings = await fetchData(list);
+// const fetchBookings = async (list) => {
+//     // Fetches all bookings from API
+//     const bookings = await fetchData(list);
     
-    return {
-        // Creates a new array with a Date object for each booked date
-        bookings: bookings.map(date => new Date(date.booking)),
-        // Finds the signed in user's booking from the api bookings
-        usersBooking: findUsersBooking(bookings),
-    };
-};
+//     return {
+//         // Creates a new array with a Date object for each booked date
+//         bookings: bookings.map(date => new Date(date.booking)),
+//         // Finds the signed in user's booking from the api bookings
+//         usersBooking: findUsersBooking(bookings),
+//     };
+// };
 
 const generateMonthViewDates = (year, month) => {
     // The previous months last date
@@ -150,7 +154,9 @@ const checkIfDayisToday = (year, month, day) => {
 // ----------------------- DETERMINES IF DAY IS BOOKED -----------------------
 const isDayBooked = (bookedTime, year, month, day) => {
     if(bookedTime) {
-        return areDatesEqual(bookedTime, new Date(year, month, day)) ? "booked" : ""
+        return areDatesEqual(new Date(bookedTime), new Date(year, month, day))
+            ? "booked"
+            : "";
     }
 }
 

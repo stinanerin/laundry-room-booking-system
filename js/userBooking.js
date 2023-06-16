@@ -1,17 +1,17 @@
-/**
-* @param {array}  arr - array of all bookings
-*/ 
-const findUsersBooking = (arr) => {
-    // Returns the booking object of the signed in user if it exists - otherwise undefined
-    const signedInUserBooking = arr.find(
-        (booking) => booking.user_id === getItem("user").id
-    );
-    if(signedInUserBooking) {
-        const bookingDateObj = new Date(signedInUserBooking.booking)
-        return bookingDateObj;
-    }
-    return
-}
+// /**
+// * @param {array}  arr - array of all bookings
+// */ 
+// const findUsersBooking = (arr) => {
+//     // Returns the booking object of the signed in user if it exists - otherwise undefined
+//     const signedInUserBooking = arr.find(
+//         (booking) => booking.user_id === getItem("user").id
+//     );
+//     if(signedInUserBooking) {
+//         const bookingDateObj = new Date(signedInUserBooking.booking)
+//         return bookingDateObj;
+//     }
+//     return
+// }
 const welcomeMsg = (booking, userObj) => {
     const div = document.querySelector("#welcomeMsg");
     div.className = "my-5 text-center";

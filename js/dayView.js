@@ -2,9 +2,11 @@
 // ----------------------- DAY VIEW WHEN YOU CLICK A CAL. DATE -----------------------
 const renderDayView = (bookings) => {
     dayGrid.querySelectorAll(".day:not(.deactivated)").forEach(li => {
-        li.addEventListener("click", () => {
+        li.addEventListener("click", async() => {
 
-            const userHasBooking = getItem("user").hasBooking
+            const response = await fetchData("user/booking");
+            const userHasBooking = response.booking;
+            console.log("userHasBooking in cal day event", userHasBooking);
 
             // If another cal-day has the active class - remove it
             dayGrid.querySelector(".active")?.classList.remove("active");
@@ -74,9 +76,10 @@ const updateSelectedDateTime = (date) => {
         .querySelectorAll("input[type='radio'][name='time-slot']")
         .forEach((slot) =>
             slot.addEventListener("change", async (e) => {
-                /* Gets the latest data from local storage to always show the most up-to-date information,
-                & finds wether the signed in user har a booking */
-                const userHasBooking = getItem("user").hasBooking;
+                // Gets the latest data on wether the signed in user har a bookingfrom database to always show the most up-to-date information,
+                const response = await fetchData("user/booking");
+                const userHasBooking = response.booking;
+                console.log("userHasBooking in time slot event", userHasBooking);
 
                 /* Sets currentDate's time to the selected radio buttons time slot value */
                 currentDate = date;
@@ -98,7 +101,9 @@ const initateFormEventListener = (bookingForm, bookings) => {
     bookingForm.addEventListener('submit', async(e) => {
         e.preventDefault();
 
-        const res = await addBooking(currentList, currentDate)
+        // const res = await addBooking(currentList, currentDate)
+        const res = await addData("bookings", { date: currentDate });
+        console.log("res add booking", res);
         
         if(res.ok) {
             /* If booking is added correctly - set local storage hasBooking variable to true, 

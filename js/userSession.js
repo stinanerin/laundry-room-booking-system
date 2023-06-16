@@ -4,8 +4,7 @@ const userIcons = document.querySelector("#userIcons")
 const checkAuthentication = async () => {
      try {
         const res = await fetchData("user/active");
-        console.log("isAuth", res);
-        return res.acknowledged;
+        return res;
      } catch (error) {
          console.log(error);
      }
@@ -23,12 +22,12 @@ const checkAuthentication = async () => {
 };
 
 const loadPage = async() => {
-    const isAuth = await checkAuthentication();
-    console.log("isAuth", isAuth);
-    if (isAuth) {
+    const isAuthUser = await checkAuthentication();
+    console.log("isAuth", isAuthUser);
+    if (isAuthUser.acknowledged) {
         addClass([loginContainer, registerContainer], "hidden");
         removeClass([calender], "hidden");
-        displayUserIcons(userObj);
+        displayUserIcons(isAuthUser);
         renderMonthCal();
     } else {
         clearElem([userIcons]);
@@ -39,7 +38,7 @@ const displayUserIcons = (user) => {
     userIcons.innerHTML = ` 
     <div class="d-flex align-items-center ">
         <p class="m-0 p-sm-2 text-center" id="userName"><b>${
-            toUpperCaseStr(user.name).split(" ")[0]
+            toUpperCaseStr(user.user).split(" ")[0]
         }</b></p>
         <button id="prfPageBtn" class="btn border-0" aria-label="Account page button">
             <i class="fa-regular fa-user"></i>
