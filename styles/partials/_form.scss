@@ -11,18 +11,37 @@
 
 form {
     .form-text {
+        color: $p-white;
         padding-left: 1.5rem;
     }
-    input, input:active, input:focus, select, input:not([type="radio"]) {
-        @include element-gradient($transparent-50, $transparent-100, $p-white, $body);
+    input, input:active, input:focus {
+        &:not([type="radio"]) {
+            @include element-gradient($transparent-50, $transparent-100, $p-white, $body);
+        }
     }
     
     input:-webkit-autofill:hover, 
-    input:-webkit-autofill:focus, input:-webkit-autofill:active, input:active, input:focus, input:hover, select:hover {
-        @include glow;
+    input:-webkit-autofill:focus, 
+    input:-webkit-autofill:active, 
+    input:active, input:focus, input:hover {
+        &:not([type="radio"]) {
+            @include glow;
+        }
+
     }
+    
     input[type="radio"] {
         margin-right: 0.5rem;
+
+        &:hover {
+            cursor: pointer;
+        }
+        + label  {
+            color: $p-white;
+            &:hover {
+                cursor: pointer;
+            }
+        }
         /* DISABLED RADIO */
         &[disabled] {
             cursor: not-allowed;
@@ -41,14 +60,13 @@ form {
               background-color: $disabled-500;
             }
         }
+        
         &[disabled] + label {
             cursor: not-allowed;
             color: $disabled-50;
         }
     }
-    input[type="radio"] + label, .form-text  {
-        color: $p-white;
-    }
+    
     label {
         color: $p-white;
         font-weight: 700;
