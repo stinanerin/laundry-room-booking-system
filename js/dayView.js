@@ -54,10 +54,7 @@ const renderDayView = (bookings) => {
                     </div>
                 </div>
             </form>`;
-            initateFormEventListener(
-                document.querySelector("#bookTime"),
-                bookings
-            );
+            initateFormEventListener(document.querySelector("#bookTime"));
             updateSelectedDateTime(currentDate);
 
             //todo - break out as function
@@ -71,7 +68,9 @@ const renderDayView = (bookings) => {
             );
             // If bookings exists in currentDate - get the time slots
             match.length > 0
-                ? (bookedTimes = match.map((date) => new Date(date.date).getHours()))
+                ? (bookedTimes = match.map((date) =>
+                      new Date(date.date).getHours()
+                  ))
                 : "";
             // If current date is already booked - disable radio for booked time slots
             bookedTimes ? diasableElem(bookedTimes) : "";
@@ -104,37 +103,10 @@ const updateSelectedDateTime = (date) => {
 };
 
 // ----------------------- EVENTLISTENER - FORM TO BOOK TIME SLOT -----------------------
-const initateFormEventListener = (bookingForm, bookings) => {
+const initateFormEventListener = (bookingForm) => {
     bookingForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        const res = await addData("bookings", { date: currentDate });
-
-        if (res.ok) {
-            /* If booking is added correctly - set local storage hasBooking variable to true, 
-            which prevents the user from booking another time 
-            Disable the currently viewed form-btn & radio-btn
-            */
-            //todo! commit msg för senate ändrignen
-            e.target.querySelector(
-                "input[type='radio']:checked"
-            ).disabled = true;
-            e.target.querySelector("button[type='submit']").disabled = true;
-            e.target.querySelector("button[type='submit']").innerText =
-                "Booked";
-            dayView.querySelector(
-                "p"
-            ).innerHTML = `Congratulations! Your booking is confirmed for <b>${dateToText(
-                currentDate
-            )}</b>.`;
-            //? Adds the recently booked date to global local bookings-arr - avoiding another API-request - which is looped when the day-view is rendered
-            bookings.push(currentDate);
-            // Updates Local storage hasBooking variable --> true
-            const activeUser = getItem("user");
-            activeUser.hasBooking = true;
-            setItem("user", activeUser);
-            // Adds purple dot on the booked cal. day
-            addClass([document.querySelector("li.active")], "booked");
-        }
+        
+        addBooking(e.target);
     });
 };
