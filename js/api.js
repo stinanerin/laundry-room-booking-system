@@ -19,7 +19,7 @@ const fetchData = async (route) => {
     }
 };
 
-//todo! fix according to new dtabse
+//todo! fix according to new databse
 const deletePassedBookings = async (arr) => {
     const res = arr.map((bookingObj) =>
         /* If date in bookingsArr has passed, relative to todays date - delete it from bookings API.
