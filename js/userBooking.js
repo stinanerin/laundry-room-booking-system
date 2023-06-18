@@ -21,7 +21,6 @@ const welcomeMsg = (booking, userObj) => {
                 ? "<button  onclick='delBooking(this)' class='button danger-btn' >Cancel</button>"
                 : ""
         }`;
-    loginContainer.insertAdjacentElement("afterend", div);
 };
 
 const delBooking = async(btn) => {
