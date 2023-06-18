@@ -18,13 +18,10 @@
     color: $text;
     -webkit-text-fill-color: $text;
     font-size: 0.875rem;
+    padding: 0.5rem 1.5rem;
 
     &::placeholder {
         font-family: $font;
-        color: $text;
-    }
-    &:not(select) {
-        padding: 0.5rem 1.5rem;
     }
 }
 
