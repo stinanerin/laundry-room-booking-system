@@ -50,11 +50,11 @@ const setItem = (key, value) => localStorage.setItem(key, JSON.stringify(value))
 
 const getItem = key => JSON.parse(localStorage.getItem(key));
 
-const dateToText = (dateObj) => {
+const dateToText = (dateStr) => {
     return new Intl.DateTimeFormat("en-GB", {
         dateStyle: "full",
         timeStyle: "short",
-    }).format(dateObj)
+    }).format(new Date(dateStr));
 }
 
 // ----------------------- ERROR MESSAGE BOX FORMS -----------------------

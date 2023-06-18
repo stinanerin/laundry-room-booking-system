@@ -8,17 +8,6 @@ const checkAuthentication = async () => {
      } catch (error) {
          console.log(error);
      }
-  
-
-    // const userObj = getItem("user")
-    // if (userObj) {
-    //     addClass([loginContainer, registerContainer], "hidden");
-    //     removeClass([calender], "hidden");
-    //     displayUserIcons(userObj);
-    //     renderMonthCal();
-    // } else {
-    //     clearElem([userIcons]);
-    // }
 };
 
 const loadPage = async() => {
@@ -59,9 +48,9 @@ const displayUserIcons = (user) => {
 const renderAccountPage = async(user) => {
     addClass([calender], "hidden")
 
-    const bookings = await fetchData("63fd07e82a491a4d0882d577");
     // Finds the signed in user's booking from the api bookings
-    const userBooking = findUsersBooking(bookings)
+    const booking = await fetchData("user/booking");
+    const userBooking = booking.booking.date
 
     welcomeMsg(userBooking, user);
 };

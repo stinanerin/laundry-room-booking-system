@@ -65,7 +65,6 @@ const renderDayView = (bookings) => {
             let bookedTimes;
             // Checks if currentDate is already booked
             // Returns every date obj that matches the current looped date - otherwise []
-            console.log(bookings);
             const match = bookings.filter(
                 (date) =>
                     new Date(date.date).toLocaleDateString() ===

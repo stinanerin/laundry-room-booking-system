@@ -1,22 +1,11 @@
-// /**
-// * @param {array}  arr - array of all bookings
-// */ 
-// const findUsersBooking = (arr) => {
-//     // Returns the booking object of the signed in user if it exists - otherwise undefined
-//     const signedInUserBooking = arr.find(
-//         (booking) => booking.user_id === getItem("user").id
-//     );
-//     if(signedInUserBooking) {
-//         const bookingDateObj = new Date(signedInUserBooking.booking)
-//         return bookingDateObj;
-//     }
-//     return
-// }
 const welcomeMsg = (booking, userObj) => {
+    console.log("booking", booking);
+    console.log("userObj", userObj);
+    console.log(dateToText(booking));
     const div = document.querySelector("#welcomeMsg");
     div.className = "my-5 text-center";
     div.innerHTML = `
-        <p>Welcome back <b>${toUpperCaseStr(userObj.name)}</b>!</p>
+        <p>Welcome back <b>${toUpperCaseStr(userObj.user)}</b>!</p>
         <div id="usersBookingInfo">
             ${
                 booking
