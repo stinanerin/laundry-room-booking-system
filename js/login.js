@@ -14,7 +14,7 @@ loginForm.addEventListener("submit", (e) => {
 const login = async() => {
 
     const user = {
-        loginName: email.value,
+        loginEmail: email.value,
         loginPass: password.value,
     };
 
