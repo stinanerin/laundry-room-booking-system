@@ -1,24 +1,26 @@
-
 // ----------------------- DAY VIEW WHEN YOU CLICK A CAL. DATE -----------------------
 const renderDayView = (bookings) => {
-    dayGrid.querySelectorAll(".day:not(.deactivated)").forEach(li => {
-        li.addEventListener("click", async() => {
-
+    dayGrid.querySelectorAll(".day:not(.deactivated)").forEach((li) => {
+        li.addEventListener("click", async () => {
             const response = await fetchData("user/booking");
             const userHasBooking = response.booking;
             console.log("userHasBooking in cal day event", userHasBooking);
 
             // If another cal-day has the active class - remove it
             dayGrid.querySelector(".active")?.classList.remove("active");
-            addClass([li], "active")
+            addClass([li], "active");
             // Get the name of the month based on the clicked day's class
-            const monthName = li.classList.contains("prevMonth") 
+            const monthName = li.classList.contains("prevMonth")
                 ? months[month - 1]
-                : li.classList.contains("nextMonth") ?
-                months[month + 1]
-                : months[month]
-            
-            const currentDate = new Date(year, months.indexOf(monthName), li.innerText)
+                : li.classList.contains("nextMonth")
+                ? months[month + 1]
+                : months[month];
+
+            const currentDate = new Date(
+                year,
+                months.indexOf(monthName),
+                li.innerText
+            );
 
             dayView.innerHTML = `
             <form id="bookTime" class="container">
@@ -53,22 +55,32 @@ const renderDayView = (bookings) => {
                     </div>
                 </div>
             </form>`;
-            initateFormEventListener(document.querySelector("#bookTime"), bookings)
+            initateFormEventListener(
+                document.querySelector("#bookTime"),
+                bookings
+            );
             updateSelectedDateTime(currentDate);
-
 
             //todo - break out as function
             let bookedTimes;
             // Checks if currentDate is already booked
             // Returns every date obj that matches the current looped date - otherwise []
-            const match = bookings.filter(date => date.toLocaleDateString() === currentDate.toLocaleDateString())
+            console.log(bookings);
+            const match = bookings.filter(
+                (date) =>
+                    new Date(date.date).toLocaleDateString() ===
+                    currentDate.toLocaleDateString()
+            );
+            console.log("match", match);
             // If bookings exists in currentDate - get the time slots
-            match.length > 0 ? bookedTimes = match.map(date => date.getHours()) : ""
+            match.length > 0
+                ? (bookedTimes = match.map((date) => new Date(date.date).getHours()))
+                : "";
             // If current date is already booked - disable radio for booked time slots
-            bookedTimes ? diasableElem(bookedTimes) : ""
-        })
-    })
-}
+            bookedTimes ? diasableElem(bookedTimes) : "";
+        });
+    });
+};
 
 // ----------------------- UPDATE SELECTED DATES TIME SLOT -----------------------
 const updateSelectedDateTime = (date) => {
@@ -79,7 +91,10 @@ const updateSelectedDateTime = (date) => {
                 // Gets the latest data on wether the signed in user har a bookingfrom database to always show the most up-to-date information,
                 const response = await fetchData("user/booking");
                 const userHasBooking = response.booking;
-                console.log("userHasBooking in time slot event", userHasBooking);
+                console.log(
+                    "userHasBooking in time slot event",
+                    userHasBooking
+                );
 
                 /* Sets currentDate's time to the selected radio buttons time slot value */
                 currentDate = date;
@@ -95,34 +110,40 @@ const updateSelectedDateTime = (date) => {
         );
 };
 
-
 // ----------------------- EVENTLISTENER - FORM TO BOOK TIME SLOT -----------------------
 const initateFormEventListener = (bookingForm, bookings) => {
-    bookingForm.addEventListener('submit', async(e) => {
+    bookingForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         // const res = await addBooking(currentList, currentDate)
         const res = await addData("bookings", { date: currentDate });
         console.log("res add booking", res);
-        
-        if(res.ok) {
+
+        if (res.ok) {
             /* If booking is added correctly - set local storage hasBooking variable to true, 
             which prevents the user from booking another time 
             Disable the currently viewed form-btn & radio-btn
             */
-           //todo! commit msg för senate ändrignen 
-            e.target.querySelector("input[type='radio']:checked").disabled = true;    
-            e.target.querySelector("button[type='submit']").disabled = true
-            e.target.querySelector("button[type='submit']").innerText = "Booked"
-            dayView.querySelector("p").innerHTML = `Congratulations! Your booking is confirmed for <b>${dateToText(currentDate)}</b>.`
+            //todo! commit msg för senate ändrignen
+            e.target.querySelector(
+                "input[type='radio']:checked"
+            ).disabled = true;
+            e.target.querySelector("button[type='submit']").disabled = true;
+            e.target.querySelector("button[type='submit']").innerText =
+                "Booked";
+            dayView.querySelector(
+                "p"
+            ).innerHTML = `Congratulations! Your booking is confirmed for <b>${dateToText(
+                currentDate
+            )}</b>.`;
             //? Adds the recently booked date to global local bookings-arr - avoiding another API-request - which is looped when the day-view is rendered
-            bookings.push(currentDate)
+            bookings.push(currentDate);
             // Updates Local storage hasBooking variable --> true
             const activeUser = getItem("user");
             activeUser.hasBooking = true;
             setItem("user", activeUser);
             // Adds purple dot on the booked cal. day
-            addClass([document.querySelector("li.active")], "booked")
+            addClass([document.querySelector("li.active")], "booked");
         }
     });
-}
+};
