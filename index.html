@@ -161,13 +161,14 @@
             <div id="calenderWrapper" class="container main hidden">
                 <div class="row">
                     <!--! CALENDER-->
-                    <div class="calendar container pb-5">
+                    <div class="calendar container">
                         <!-- HEADER MONTH - CONTROLLER-->
                         <header class="row d-flex align-items-center m-0 my-5">
                             <div class="col-auto text-start"><button class="btn border-0" id="prevMonthBtn"><i class="fas fa-angle-left"></i></button></div>
                             <div class="month-header col text-center"></div>
                             <div class="col-auto text-end"><button class="btn border-0" id="nextMonthBtn"><i class="fas fa-angle-right"></i></button></div>
                         </header>
+
                         <!-- WEEKDAYS-->
                         <div class="weekdays row text-center mb-3 gx-0">
                             <div class="col"><h3>M</h3></div>
@@ -182,6 +183,13 @@
                         <ul class="calender-days-grid text-center p-0">
                             <!-- Grid inserted via JS -->                        
                         </ul>
+                    </div>
+                </div>
+                <!-- INSTRUCTIONS-->
+                <div class="instructions container">
+                    <div class="row">
+                        <div class="col-auto booked"></div>
+                        <p class="col-auto"><b>Your confirmed booking</b></p>
                     </div>
                 </div>
                 <div class="row">

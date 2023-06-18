@@ -1,6 +1,9 @@
 // * {
 //     outline: 1px solid pink;
 // }
+*, *:after, *:before {
+    box-sizing: border-box;
+}
 html {
     height: 100%;
 }
@@ -38,6 +41,3 @@ i {
     color: $accent-100;
     cursor: pointer;
 }
-
-
-
