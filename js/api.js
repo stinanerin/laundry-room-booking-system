@@ -1,5 +1,4 @@
 const API_BASE_URL = "https://express-booking-system-backend.herokuapp.com/api/v.1/";
-// const API_BASE_URL = "https://nackademin-item-tracker.herokuapp.com/"
 
 const fetchData = async (route) => {
     try {
@@ -7,18 +6,12 @@ const fetchData = async (route) => {
             withCredentials: true,
         });
 
-        // console.log("fetchData", res);
+        // console.log("fetchData res", res);
         if (res.status !== 200) {
             console.log(res.response.statusText);
             throw new Error(res.statusText);
         }
-        // const data = await res.json();
-        // let arr = data.itemList;
-        // arr = await deletePassedBookings(arr);
-        // let  objBooking  = arr[arr.length -1];
-        // console.log("latest booking", objBooking);
         return res.data;
-        // return arr;
     } catch (error) {
         console.log(error);
         // displayModal(error.message);
@@ -53,89 +46,27 @@ const deletePassedBookings = async (arr) => {
     })
     /* Returns arr - regardless of if it has been modified or not */
     return arr
-};
+}
 
-// ----------------------- CREATE USER IN API -----------------------
-const createUser = async (name, email, pwd) => {
+const deleteData = async(route) => {
     try {
-        //todo! Change list
-        const res = await fetch(
-            `${API_BASE_URL}lists/6429d84525fc8200e0300328/items`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username: name,
-                    email: email,
-                    password: pwd,
-                }),
-            }
-        );
-        if (!res.ok) {
+        const res = await axios.delete(`${API_BASE_URL}${route}`, {
+            withCredentials: true,
+        });
+        if (res.status !== 200) {
+            console.log(res.response.statusText);
             throw new Error(res.statusText);
         }
-        const { list } = await res.json();
+        console.log("deleteData res", res);
 
-        // Find latest registered user and adds to local storage as signed in
-        const user = list.itemList[list.itemList.length - 1];
-        addSession(user);
+        return res
     } catch (error) {
-        displayModal(error.message);
+        console.log(error)
+        displayModal(error.message)
     }
-};
-
-// const addBooking = async (listId, date) => {
-//     try {
-//         if (!getItem("user").hasBooking) {
-//             const res = await fetch(`${API_BASE_URL}lists/${listId}/items`, {
-//                 method: "POST",
-//                 headers: {
-//                     "Content-Type": "application/json",
-//                 },
-//                 body: JSON.stringify({
-//                     booking: date,
-//                     user_id: getItem("user").id,
-//                 }),
-//             });
-//             if (!res.ok) {
-//                 throw new Error(res.statusText);
-//             }
-//             return res;
-//         } else {
-//             throw new Error(
-//                 "You already have a booking, please cancel it or wait until the booked day ahs passed to book a new laundry time."
-//             );
-//         }
-//     } catch (error) {
-//         displayModal(error.message);
-//     }
-// };
-
-const deleteBooking = async (listId, item) => {
-    try {
-        const res = await fetch(
-            `${API_BASE_URL}lists/${listId}/items/${item._id}`,
-            {
-                method: "DELETE",
-            }
-        );
-        if (!res.ok) {
-            throw new Error(res.statusText);
-        }
-        return res;
-    } catch (error) {
-        console.log(error);
-        displayModal(error.message);
-    }
-};
-
-//! New
+}
 
 const addData = async (route, data) => {
-    console.log(route, data);
-    console.log(data);
     try {
         const res = await axios.post(`${API_BASE_URL}${route}`, data, {
             withCredentials: true,
@@ -144,7 +75,7 @@ const addData = async (route, data) => {
             console.log(res.response.statusText);
             throw new Error(res.response.statusText);
         }
-        console.log(res);
+        console.log("addData res", res);
         return res.data;
     } catch (error) {
         console.error(error);
