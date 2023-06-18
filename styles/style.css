@@ -29,6 +29,15 @@
     max-width: 33rem;
     margin: auto;
   }
+  a {
+    text-decoration: none;
+  }
+  a > * {
+    color: hsl(0deg, 0%, 100%);
+  }
+  a:hover {
+    cursor: pointer;
+  }
   i {
     color: hsl(0deg, 0%, 100%);
   }
@@ -39,71 +48,6 @@
     text-decoration: underline;
     color: #909ec9;
     cursor: pointer;
-  }
-  input:not([type=radio]), input:active:not([type=radio]), input:focus:not([type=radio]),
-input:-webkit-autofill:not([type=radio]),
-input:-webkit-autofill:focus:not([type=radio]),
-input:-webkit-autofill:active:not([type=radio]), input[data-autocompleted]:not([type=radio]), select:not([type=radio]) {
-    /* fallback for old browsers */
-    background: hsl(0deg, 0%, 0%);
-    background: linear-gradient(270deg, rgba(255, 255, 255, 0.46) 0%, rgba(253, 253, 253, 0) 100%);
-    background: -webkit-linear-gradient(270deg, rgba(255, 255, 255, 0.46) 0%, rgba(253, 253, 253, 0) 100%);
-    border: none;
-    border-radius: 50px;
-    -webkit-appearance: none;
-    appearance: none;
-    font-family: system-ui;
-    color: hsl(0deg, 0%, 100%);
-    font-size: 0.875rem;
-    /* Almost working autocomplete styling */
-    -webkit-transition: background-color 600000s 0s, color 600000s 0s;
-    transition: background-color 600000s 0s, color 600000s 0s;
-  }
-  input:not([type=radio])::placeholder, input:active:not([type=radio])::placeholder, input:focus:not([type=radio])::placeholder,
-input:-webkit-autofill:not([type=radio])::placeholder,
-input:-webkit-autofill:focus:not([type=radio])::placeholder,
-input:-webkit-autofill:active:not([type=radio])::placeholder, input[data-autocompleted]:not([type=radio])::placeholder, select:not([type=radio])::placeholder {
-    font-family: system-ui;
-    color: hsl(0deg, 0%, 100%);
-  }
-  input:not([type=radio]):not(select), input:active:not([type=radio]):not(select), input:focus:not([type=radio]):not(select),
-input:-webkit-autofill:not([type=radio]):not(select),
-input:-webkit-autofill:focus:not([type=radio]):not(select),
-input:-webkit-autofill:active:not([type=radio]):not(select), input[data-autocompleted]:not([type=radio]):not(select), select:not([type=radio]):not(select) {
-    padding: 0.5rem 1.5rem;
-  }
-  input:active:not([type=radio]), input:focus:not([type=radio]), input:-webkit-autofill:focus:not([type=radio]), input:-webkit-autofill:active:not([type=radio]), select:hover:not([type=radio]) {
-    box-shadow: inset 0 0 0.75em 0 rgba(255, 255, 255, 0.46), 0 0 1em 0.2em rgba(255, 255, 255, 0.46);
-    -webkit-box-shadow: inset 0 0 0.75em 0 rgba(255, 255, 255, 0.46), 0 0 1em 0.2em rgba(255, 255, 255, 0.46);
-  }
-  input[data-autocompleted] {
-    /* fallback for old browsers */
-    background: hsl(0deg, 0%, 0%);
-    background: linear-gradient(270deg, rgba(255, 255, 255, 0.46) 0%, rgba(253, 253, 253, 0) 100%);
-    background: -webkit-linear-gradient(270deg, rgba(255, 255, 255, 0.46) 0%, rgba(253, 253, 253, 0) 100%);
-    border: none;
-    border-radius: 50px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-         appearance: none;
-    font-family: system-ui;
-    color: hsl(0deg, 0%, 100%);
-    font-size: 0.875rem;
-  }
-  input[data-autocompleted]::-moz-placeholder {
-    font-family: system-ui;
-    color: hsl(0deg, 0%, 100%);
-  }
-  input[data-autocompleted]:-ms-input-placeholder {
-    font-family: system-ui;
-    color: hsl(0deg, 0%, 100%);
-  }
-  input[data-autocompleted]::placeholder {
-    font-family: system-ui;
-    color: hsl(0deg, 0%, 100%);
-  }
-  input[data-autocompleted]:not(select) {
-    padding: 0.5rem 1.5rem;
   }
   .button {
     border-radius: 50px;
@@ -222,6 +166,53 @@ input:-webkit-autofill:active:not([type=radio]):not(select), input[data-autocomp
     border-bottom: 1px solid #909ec9;
     font-weight: 900;
     color: #909ec9;
+  }
+  .form-wrapper {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.133) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: 0.5rem;
+    padding: 2rem 0.75rem;
+  }
+  .form-wrapper .form-heading {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+  form .form-text {
+    padding-left: 1.5rem;
+  }
+  form input, form input:active, form input:focus, form select, form input:not([type=radio]) {
+    background-color: rgba(253, 253, 253, 0);
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 0.5em 0 rgba(255, 255, 255, 0.46), 0 0 0.1em 0.1em rgba(255, 255, 255, 0.46);
+    -webkit-box-shadow: inset 0 0 0.5em 0 rgba(255, 255, 255, 0.46), 0 0 0.1em 0.1em rgba(255, 255, 255, 0.46);
+    border: none;
+    border-radius: 50px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+         appearance: none;
+    font-family: system-ui;
+    color: hsl(0deg, 0%, 100%);
+    -webkit-text-fill-color: hsl(0deg, 0%, 100%);
+    font-size: 0.875rem;
+  }
+  form input::-moz-placeholder, form input:active::-moz-placeholder, form input:focus::-moz-placeholder, form select::-moz-placeholder, form input:not([type=radio])::-moz-placeholder {
+    font-family: system-ui;
+    color: hsl(0deg, 0%, 100%);
+  }
+  form input:-ms-input-placeholder, form input:active:-ms-input-placeholder, form input:focus:-ms-input-placeholder, form select:-ms-input-placeholder, form input:not([type=radio]):-ms-input-placeholder {
+    font-family: system-ui;
+    color: hsl(0deg, 0%, 100%);
+  }
+  form input::placeholder, form input:active::placeholder, form input:focus::placeholder, form select::placeholder, form input:not([type=radio])::placeholder {
+    font-family: system-ui;
+    color: hsl(0deg, 0%, 100%);
+  }
+  form input:not(select), form input:active:not(select), form input:focus:not(select), form select:not(select), form input:not([type=radio]):not(select) {
+    padding: 0.5rem 1.5rem;
+  }
+  form input:-webkit-autofill:hover,
+form input:-webkit-autofill:focus, form input:-webkit-autofill:active, form input:active, form input:focus, form input:hover, form select:hover {
+    box-shadow: inset 0 0 0.75em 0 rgba(255, 255, 255, 0.46), 0 0 1em 0.2em rgba(255, 255, 255, 0.46);
+    -webkit-box-shadow: inset 0 0 0.75em 0 rgba(255, 255, 255, 0.46), 0 0 1em 0.2em rgba(255, 255, 255, 0.46);
   }
   form input[type=radio] {
     margin-right: 0.5rem;
