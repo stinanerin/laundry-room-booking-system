@@ -18,6 +18,15 @@ main {
     max-width: 33rem;
     margin: auto;
 }
+a {
+    text-decoration: none;
+    > * {
+        color: $p-white;
+    }
+    &:hover {
+        cursor: pointer;
+    }
+}
 i {
     color: $p-white;
 }
@@ -29,25 +38,6 @@ i {
     color: $accent-100;
     cursor: pointer;
 }
-input, input:active, input:focus, 
-input:-webkit-autofill, 
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active, input[data-autocompleted], select{
-    &:not([type="radio"]) {
 
-        @include element-gradient($transparent-50, $transparent-100, $p-white, $body);
-        /* Almost working autocomplete styling */
-        transition: background-color 600000s 0s, color 600000s 0s;
-    }
-}
-input:active, input:focus, input:-webkit-autofill:focus, input:-webkit-autofill:active, select:hover {
-    &:not([type="radio"]) {
-        @include glow;
-    }
-}
 
-input[data-autocompleted] {
-    @include element-gradient($transparent-50, $transparent-100, $p-white, $body);
-
-}
 

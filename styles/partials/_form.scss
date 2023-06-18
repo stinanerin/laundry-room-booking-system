@@ -1,4 +1,26 @@
+.form-wrapper {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.133) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: $radius;
+    padding:  2rem 0.75rem;
+    .form-heading {
+        margin-bottom: 3rem;
+        text-align: center;
+    }  
+}
+
+
 form {
+    .form-text {
+        padding-left: 1.5rem;
+    }
+    input, input:active, input:focus, select, input:not([type="radio"]) {
+        @include element-gradient($transparent-50, $transparent-100, $p-white, $body);
+    }
+    
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus, input:-webkit-autofill:active, input:active, input:focus, input:hover, select:hover {
+        @include glow;
+    }
     input[type="radio"] {
         margin-right: 0.5rem;
         /* DISABLED RADIO */
@@ -57,3 +79,4 @@ form {
         }
     }
 }
+
