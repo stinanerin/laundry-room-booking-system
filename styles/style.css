@@ -12,6 +12,9 @@
     color: hsl(0deg, 0%, 100%);
     font-size: 0.8rem;
   }
+  *, *:after, *:before {
+    box-sizing: border-box;
+  }
   html {
     height: 100%;
   }
@@ -165,6 +168,28 @@
     border-bottom: 1px solid #909ec9;
     font-weight: 900;
     color: #909ec9;
+  }
+  .instructions p {
+    font-size: 0.65rem;
+  }
+  @media (width >= 576px) {
+    .instructions p {
+      font-size: 0.8rem;
+    }
+  }
+  .instructions .booked {
+    position: relative;
+  }
+  .instructions .booked:after {
+    content: "";
+    display: block;
+    width: 0.35rem;
+    height: 0.35rem;
+    background-color: rgb(173, 97, 227);
+    border-radius: 50px;
+    position: absolute;
+    top: 4px;
+    right: 0;
   }
   .form-wrapper {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.133) 0%, rgba(255, 255, 255, 0) 100%);

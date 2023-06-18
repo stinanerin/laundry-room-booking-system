@@ -73,3 +73,20 @@
         }
     }
 }
+.instructions {
+    p {
+        font-size: 0.65rem;
+        @media($sm) {
+            font-size: 0.8rem;
+        }
+    }
+    .booked {
+        position: relative;
+    }
+    .booked:after {
+        @include dot($booked);
+        position: absolute;
+        top: 4px;
+        right: 0;
+    }
+}
