@@ -50,7 +50,6 @@ const renderAccountPage = async(user) => {
 
     // Finds the signed in user's booking from the api bookings
     const booking = await fetchData("user/booking");
-    const userBooking = booking.booking.date
 
-    welcomeMsg(userBooking, user);
+    welcomeMsg(booking.booking, user);
 };

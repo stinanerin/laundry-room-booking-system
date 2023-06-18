@@ -47,27 +47,23 @@ const deletePassedBookings = async (arr) => {
     })
     /* Returns arr - regardless of if it has been modified or not */
     return arr
-};
+}
 
-const deleteBooking = async (listId, item) => {
+const deleteData = async(route) => {
     try {
-        const res = await fetch(
-            `${API_BASE_URL}lists/${listId}/items/${item._id}`,
-            {
-                method: "DELETE",
-            }
-        );
-        if (!res.ok) {
+        const res = await axios.delete(`${API_BASE_URL}${route}`, {
+            withCredentials: true,
+        });
+        if (res.status !== 200) {
+            console.log(res.response.statusText);
             throw new Error(res.statusText);
         }
-        return res;
+        return res
     } catch (error) {
-        console.log(error);
-        displayModal(error.message);
+        console.log(error)
+        displayModal(error.message)
     }
-};
-
-//! New
+}
 
 const addData = async (route, data) => {
     console.log(route, data);

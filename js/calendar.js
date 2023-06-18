@@ -19,26 +19,23 @@ const months = Array.from({length: 12}, (e, i) => {
 let today = new Date(),
     month = today.getMonth(),
     year = today.getFullYear(),
-    currentDate,
-    currentList = "63fd07e82a491a4d0882d577";
+    currentDate;
 
 const renderMonthCal = async() => {
     // Clears calender & booking form when month changes
     dayGrid.innerHTML = "";
     dayView.innerHTML = "";
 
-    // const { bookings, usersBooking } = await fetchBookings(currentList);
     const res = await fetchData("bookings");
-    const response = await fetchData("user/booking");
+    const bookings = res.bookings;
 
-    const bookings = res.bookings
-    const usersBooking = response.booking.date;
+    const response = await fetchData("user/booking");
+    const usersBooking = response.booking?.date;
 
     // Updates month header 
     dateHeader.innerHTML =  `<h2>${months[month]} ${year}</h2>`;
 
     const dates = generateMonthViewDates(year, month)
-    // console.log(dates);
 
     // Loops through the dates array and renders them to the DOM
     dates.forEach(({date, month, prevMonth, nextMonth}, index) => {
