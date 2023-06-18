@@ -1,8 +1,7 @@
 const welcomeMsg = (booking, userObj) => {
     const userBooking = booking?.date;
 
-    const div = document.querySelector("#welcomeMsg");
-    div.innerHTML = `
+    document.querySelector("#welcomeMsg").innerHTML = `
         <p>Welcome back <b>${toUpperCaseStr(userObj.user)}</b>!</p>
         <div id="usersBookingInfo">
             ${
@@ -22,7 +21,6 @@ const welcomeMsg = (booking, userObj) => {
 };
 
 const delBooking = async(btn, id) => {
-
     const res = await deleteData(`bookings/${id}`);
 
     if(res.data.acknowledged) {

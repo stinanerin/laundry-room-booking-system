@@ -4,7 +4,6 @@ const renderDayView = (bookings) => {
         li.addEventListener("click", async () => {
             const response = await fetchData("user/booking");
             const userHasBooking = response.booking;
-            console.log("userHasBooking in cal day event", userHasBooking);
 
             // If another cal-day has the active class - remove it
             dayGrid.querySelector(".active")?.classList.remove("active");
@@ -70,7 +69,6 @@ const renderDayView = (bookings) => {
                     new Date(date.date).toLocaleDateString() ===
                     currentDate.toLocaleDateString()
             );
-            console.log("match", match);
             // If bookings exists in currentDate - get the time slots
             match.length > 0
                 ? (bookedTimes = match.map((date) => new Date(date.date).getHours()))
@@ -90,10 +88,6 @@ const updateSelectedDateTime = (date) => {
                 // Gets the latest data on wether the signed in user har a bookingfrom database to always show the most up-to-date information,
                 const response = await fetchData("user/booking");
                 const userHasBooking = response.booking;
-                console.log(
-                    "userHasBooking in time slot event",
-                    userHasBooking
-                );
 
                 /* Sets currentDate's time to the selected radio buttons time slot value */
                 currentDate = date;
@@ -114,9 +108,7 @@ const initateFormEventListener = (bookingForm, bookings) => {
     bookingForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // const res = await addBooking(currentList, currentDate)
         const res = await addData("bookings", { date: currentDate });
-        console.log("res add booking", res);
 
         if (res.ok) {
             /* If booking is added correctly - set local storage hasBooking variable to true, 

@@ -12,7 +12,7 @@ const checkAuthentication = async () => {
 
 const loadPage = async() => {
     const isAuthUser = await checkAuthentication();
-    console.log("isAuth", isAuthUser);
+    // console.log("isAuth", isAuthUser);
     if (isAuthUser.acknowledged) {
         addClass([loginContainer, registerContainer], "hidden");
         removeClass([calender], "hidden");

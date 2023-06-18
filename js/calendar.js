@@ -58,18 +58,6 @@ const renderMonthCal = async() => {
     renderDayView(bookings)
 }
 
-// const fetchBookings = async (list) => {
-//     // Fetches all bookings from API
-//     const bookings = await fetchData(list);
-    
-//     return {
-//         // Creates a new array with a Date object for each booked date
-//         bookings: bookings.map(date => new Date(date.booking)),
-//         // Finds the signed in user's booking from the api bookings
-//         usersBooking: findUsersBooking(bookings),
-//     };
-// };
-
 const generateMonthViewDates = (year, month) => {
     // The previous months last date
     let prevLastDay = new Date(year, month, 0),

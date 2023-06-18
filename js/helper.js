@@ -45,11 +45,6 @@ const toUpperCaseStr = (str) => str.split(" ")
         return word[0].toUpperCase() + word.slice(1)
     }).join(" ")
 
-// ----------------------- LOCAL STORAGE - SET & GET -----------------------
-const setItem = (key, value) => localStorage.setItem(key, JSON.stringify(value));
-
-const getItem = key => JSON.parse(localStorage.getItem(key));
-
 const dateToText = (dateStr) => {
     return new Intl.DateTimeFormat("en-GB", {
         dateStyle: "full",

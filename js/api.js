@@ -6,13 +6,12 @@ const fetchData = async (route) => {
             withCredentials: true,
         });
 
-        // console.log("fetchData", res);
+        // console.log("fetchData res", res);
         if (res.status !== 200) {
             console.log(res.response.statusText);
             throw new Error(res.statusText);
         }
         return res.data;
-        // return arr;
     } catch (error) {
         console.log(error);
         // displayModal(error.message);
@@ -58,6 +57,8 @@ const deleteData = async(route) => {
             console.log(res.response.statusText);
             throw new Error(res.statusText);
         }
+        console.log("deleteData res", res);
+
         return res
     } catch (error) {
         console.log(error)
@@ -66,8 +67,6 @@ const deleteData = async(route) => {
 }
 
 const addData = async (route, data) => {
-    console.log(route, data);
-    console.log(data);
     try {
         const res = await axios.post(`${API_BASE_URL}${route}`, data, {
             withCredentials: true,
@@ -76,7 +75,7 @@ const addData = async (route, data) => {
             console.log(res.response.statusText);
             throw new Error(res.response.statusText);
         }
-        console.log(res);
+        console.log("addData res", res);
         return res.data;
     } catch (error) {
         console.error(error);
