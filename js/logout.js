@@ -1,7 +1,6 @@
 // ----------------------- LOG OUT -----------------------
 
-const logout = () => {
-    localStorage.removeItem("user");
+const logout = async() => {
+    await addData("user/logout")
     location.reload();
 }
-
