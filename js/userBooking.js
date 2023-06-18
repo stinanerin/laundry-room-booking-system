@@ -35,3 +35,21 @@ const delBooking = async(btn, id) => {
         ).innerHTML = `<p>Booking succesfully deleted</p>`;
     }
 }
+
+const addBooking = async (form) => {
+    const res = await addData("bookings", { date: currentDate });
+
+    if (res.acknowledged) {
+        // If booking is added correctly update DOM accordingly
+        form.querySelector("input[type='radio']:checked").disabled = true;
+        form.querySelector("button[type='submit']").disabled = true;
+        form.querySelector("button[type='submit']").innerText = "Booked";
+        dayView.querySelector(
+            "p"
+        ).innerHTML = `Congratulations! Your booking is confirmed for <b>${dateToText(
+            currentDate
+        )}</b>.`;
+        // Adds purple dot on the booked cal. day
+        addClass([document.querySelector("li.active")], "booked");
+    }
+};
