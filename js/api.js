@@ -17,35 +17,6 @@ const fetchData = async (route) => {
         // displayModal(error.message);
         return error.response.data;
     }
-};
-
-//todo! fix according to new databse
-const deletePassedBookings = async (arr) => {
-    const res = arr.map((bookingObj) =>
-        /* If date in bookingsArr has passed, relative to todays date - delete it from bookings API.
-        Otherwise just return the booking object */
-        hasDatePassed(new Date(bookingObj.booking), today)
-            ? deleteBooking(currentList, bookingObj)
-            : bookingObj
-    );
-    /* Await all deleted pending bookings promises */
-    newBookingsArr = await Promise.all(res);
-    newBookingsArr.forEach((booking) => {
-        /* If a booking has beeen succesfully deleted from api (res.ok),
-        extract the deleted bookings id from the response url and delete it from the original arr, 
-        finding it by its booking.id. */
-        if (booking.ok) {
-            const idDelBooking = booking.url.split("items/")[1];
-            arr.splice(
-                arr.indexOf(
-                    arr.find((booking) => booking._id === idDelBooking)
-                ),
-                1
-            )
-        }
-    })
-    /* Returns arr - regardless of if it has been modified or not */
-    return arr
 }
 
 const deleteData = async(route) => {
