@@ -1,6 +1,6 @@
-// ----------------------- LOG OUT -----------------------
+import { addData } from "./api.js";
 
-const logout = async() => {
-    await addData("user/logout")
+export const logout = async () => {
+    await addData("user/logout");
     location.reload();
-}
+};

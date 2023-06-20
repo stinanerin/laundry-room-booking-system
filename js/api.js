@@ -1,6 +1,8 @@
+import { displayModal } from "./modal.js";
+
 const API_BASE_URL = "https://express-booking-system-backend.herokuapp.com/api/v.1/";
 
-const fetchData = async (route) => {
+export const fetchData = async (route) => {
     try {
         const res = await axios.get(`${API_BASE_URL}${route}`, {
             withCredentials: true,
@@ -19,7 +21,7 @@ const fetchData = async (route) => {
     }
 }
 
-const deleteData = async(route) => {
+export const deleteData = async(route) => {
     try {
         const res = await axios.delete(`${API_BASE_URL}${route}`, {
             withCredentials: true,
@@ -37,7 +39,7 @@ const deleteData = async(route) => {
     }
 }
 
-const addData = async (route, data) => {
+export const addData = async (route, data) => {
     try {
         const res = await axios.post(`${API_BASE_URL}${route}`, data, {
             withCredentials: true,

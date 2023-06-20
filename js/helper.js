@@ -1,4 +1,4 @@
-const createElement = (type, aClass, str, arr) => {
+export const createElement = (type, aClass, str, arr) => {
     let elem = document.createElement(type);
     if(aClass) {
         elem.className = aClass;
@@ -13,39 +13,39 @@ const createElement = (type, aClass, str, arr) => {
 }
 
 //! todo - make dynamic
-const diasableElem = (arr) => {
+export const diasableElem = (arr) => {
     document.querySelectorAll("input[type='radio'][name='time-slot']")
     .forEach(radio => {
         arr.includes(+radio.value) ? radio.disabled = true : "";
     })
 }
 
-const toggleClass = (arr, aClass) => {
+export const toggleClass = (arr, aClass) => {
     arr.forEach(elem => elem.classList.toggle(aClass))
 }
 
-const addClass = (arr, aClass) => {
+export const addClass = (arr, aClass) => {
     arr.forEach(elem => elem.classList.add(aClass))
 }
 
-const removeClass = (arr, aClass) => {
+export const removeClass = (arr, aClass) => {
     arr.forEach(elem => elem.classList.remove(aClass))
 }
 
-const clearElem = (arr) => {
+export const clearElem = (arr) => {
     arr.forEach(elem => elem.innerHTML = "")
 }
 
-const clearValue = (arr) => {
+export const clearValue = (arr) => {
     arr.forEach(elem => elem.value = "")
 }
 
-const toUpperCaseStr = (str) => str.split(" ")
+export const toUpperCaseStr = (str) => str.split(" ")
     .map(word => {
         return word[0].toUpperCase() + word.slice(1)
     }).join(" ")
 
-const dateToText = (dateStr) => {
+export const dateToText = (dateStr) => {
     return new Intl.DateTimeFormat("en-GB", {
         dateStyle: "full",
         timeStyle: "short",
@@ -53,7 +53,7 @@ const dateToText = (dateStr) => {
 }
 
 // ----------------------- ERROR MESSAGE BOX FORMS -----------------------
-const displayError = (wrapper, message) => {
+export const displayError = (wrapper, message) => {
     wrapper.innerHTML = `
     <div class="alert alert-danger container" role="alert">
         <div class="row">

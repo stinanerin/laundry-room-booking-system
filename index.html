@@ -21,18 +21,9 @@
     <link rel="stylesheet" href="styles/style.css">
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- JS -->
-    <script src="js/helper.js" defer></script>
-    <script src="js/api.js" defer></script>
-    <script src="js/register.js" defer></script>
-    <script src="js/login.js" defer></script>
-    <script src="js/logout.js" defer></script>
-    <script src="js/calendar.js" defer></script>
-    <script src="js/dayView.js" defer></script>
-    <script src="js/userSession.js" defer></script>
-    <script src="js/userBooking.js" defer></script>
-    <script src="js/modal.js" defer></script>
-    <script src="js/main.js" defer></script>
+    <!-- JS -->   
+    <script type="module" src="js/main.js" defer></script>
+    
 </head>
 <body>
     <header>
@@ -161,7 +152,7 @@
             <div id="calenderWrapper" class="container main hidden">
                 <div class="row">
                     <!--! CALENDER-->
-                    <div class="calendar container">
+                    <div id="calender" class="calendar container">
                         <!-- HEADER MONTH - CONTROLLER-->
                         <header class="row d-flex align-items-center m-0 my-5">
                             <div class="col-auto text-start"><button class="btn border-0" id="prevMonthBtn"><i class="fas fa-angle-left"></i></button></div>
@@ -180,7 +171,7 @@
                             <div class="col"><h3>S</h3></div>
                         </div>
                         <!-- CALENDER DAYS GRID-->
-                        <ul class="calender-days-grid text-center p-0">
+                        <ul id="calenderDaysGrid" class="calender-days-grid text-center p-0">
                             <!-- Grid inserted via JS -->                        
                         </ul>
                     </div>
