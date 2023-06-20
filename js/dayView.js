@@ -1,5 +1,10 @@
+import { dayGrid, months, month, year, weekdays } from "./variables.js";
+import { addClass, diasableElem, dateToText } from "./helper.js";
+import { fetchData } from "./api.js";
+import { addBooking } from "./userBooking.js";
+
 // ----------------------- DAY VIEW WHEN YOU CLICK A CAL. DATE -----------------------
-const renderDayView = (bookings) => {
+export const renderDayView = (bookings) => {
     dayGrid.querySelectorAll(".day:not(.deactivated)").forEach((li) => {
         li.addEventListener("click", async () => {
             const response = await fetchData("user/booking");
@@ -54,7 +59,10 @@ const renderDayView = (bookings) => {
                     </div>
                 </div>
             </form>`;
-            initateFormEventListener(document.querySelector("#bookTime"));
+            initateFormEventListener(
+                document.querySelector("#bookTime"),
+                currentDate
+            );
             updateSelectedDateTime(currentDate);
 
             //todo - break out as function
@@ -79,7 +87,7 @@ const renderDayView = (bookings) => {
 };
 
 // ----------------------- UPDATE SELECTED DATES TIME SLOT -----------------------
-const updateSelectedDateTime = (date) => {
+const updateSelectedDateTime = (currentDate) => {
     document
         .querySelectorAll("input[type='radio'][name='time-slot']")
         .forEach((slot) =>
@@ -89,8 +97,7 @@ const updateSelectedDateTime = (date) => {
                 const userHasBooking = response.booking;
 
                 /* Sets currentDate's time to the selected radio buttons time slot value */
-                currentDate = date;
-                currentDate.setHours(e.target.value, 00, 00);
+                currentDate.setHours(e.target.value, 0, 0);
 
                 // Displays a message to the user based on whether they have a booking or not
                 dayView.querySelector("p").innerHTML = !userHasBooking
@@ -103,10 +110,10 @@ const updateSelectedDateTime = (date) => {
 };
 
 // ----------------------- EVENTLISTENER - FORM TO BOOK TIME SLOT -----------------------
-const initateFormEventListener = (bookingForm) => {
+const initateFormEventListener = (bookingForm, choosenDate) => {
     bookingForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        
-        addBooking(e.target);
+
+        addBooking(e.target, choosenDate);
     });
 };

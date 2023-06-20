@@ -1,37 +1,26 @@
-const loginUserLink = document.querySelector("#loginLink"),
-    loginContainer = document.querySelector("#loginWrapper"),
-    registerUserLink = document.querySelector("#registerLink"),
-    registerContainer = document.querySelector("#registerWrapper"),
-    registerUserForm = document.querySelector("#registerUser"),
-    calender = document.querySelector("#calenderWrapper"),
-    emailAlert = document.querySelector("#emailAlert"),
-    fullName = document.querySelector("#FullName"),
-    regEmail = document.querySelector("#email"),
-    pwd = document.querySelector("#pwd");
+import { addData } from "./api.js";
+import { addClass, removeClass } from "./helper.js";
+import { loadPage } from "./userSession.js";
 
-// ----------------------- REGISTER USER FORM -----------------------
-registerUserForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    validateUserRegistration(fullName.value, regEmail.value, pwd.value);
-});
+const emailAlert = document.querySelector("#emailAlert");
+const fullName = document.querySelector("#FullName");
+const regEmail = document.querySelector("#email");
+const pwd = document.querySelector("#pwd");
 
 // ----------------------- VALIDATION - REGISTER USER -----------------------
-const validateUserRegistration = async (name, email, password) => {
-    // const checkUniqueEmail = (user) => user.email !== email;
-
+export const registerUser = async () => {
     // Creates user in API
     const res = await addData("user/register", {
-        regName: email,
-        regPass: password,
+        regName: fullName.value,
+        regEmail: regEmail.value,
+        regPass: pwd.value,
     });
-    console.log(res);
 
     if (res.acknowledged) {
         addClass([emailAlert], "hidden");
         removeClass([regEmail], "error");
         console.log("reg user succesfull");
-        loadPage()
+        loadPage();
     } else if (res.customError) {
         //! If email is not unique
         removeClass([emailAlert], "hidden");
@@ -39,7 +28,6 @@ const validateUserRegistration = async (name, email, password) => {
     } else {
         addClass([emailAlert], "hidden");
         removeClass([regEmail], "error");
-
         //todo! Somethign went wrong - display error
     }
 };

@@ -1,38 +1,27 @@
-// ----------------------- LOGIN -----------------------
-const loginForm = document.querySelector("#loginForm"),
-    loginError = document.querySelector("#loginAlert"),
-    email = document.querySelector("#loginEmail"),
-    password = document.querySelector("#loginPWD");
+import { addData } from "./api.js";
+import { loadPage } from "./userSession.js";
+import { clearElem, displayError } from "./helper.js";
 
+const loginError = document.querySelector("#loginAlert");
+const email = document.querySelector("#loginEmail");
+const password = document.querySelector("#loginPWD");
 
-loginForm.addEventListener("submit", (e) => {
-    e.preventDefault()
-
-    login()
-})
-
-const login = async() => {
-
+export const loginUser = async () => {
     const user = {
         loginEmail: email.value,
         loginPass: password.value,
     };
 
     const res = await addData("user/login", user);
-    console.log(res);
     if (res.acknowledged) {
-
         console.log("user logged in");
         clearElem([loginError]);
         loadPage();
-
-    } else if(res.customError){
+    } else if (res.customError) {
         console.log("email / pwd do not match");
         displayError(loginError, res.error);
-
     } else {
         console.log("login failed");
         //todo! Somethign went wrong - display error
     }
-}
-
+};

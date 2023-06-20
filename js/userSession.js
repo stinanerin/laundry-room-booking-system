@@ -1,21 +1,30 @@
-const userIcons = document.querySelector("#userIcons")
+import { fetchData } from "./api.js";
+import { logout } from "./logout.js";
+import { renderMonthCal } from "./calendar.js";
+import { welcomeMsg } from "./userBooking.js";
+import { clearElem, toUpperCaseStr, addClass, removeClass } from "./helper.js";
+
+import { registerContainer, loginContainer } from "./variables.js";
+
+const calenderWrapper = document.querySelector("#calenderWrapper");
+const userIcons = document.querySelector("#userIcons");
 
 // ----------------------- CHECK ONGOING USER SESSION -----------------------
 const checkAuthentication = async () => {
-     try {
+    try {
         const res = await fetchData("user/active");
         return res;
-     } catch (error) {
-         console.log(error);
-     }
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-const loadPage = async() => {
+export const loadPage = async () => {
     const isAuthUser = await checkAuthentication();
     // console.log("isAuth", isAuthUser);
     if (isAuthUser.acknowledged) {
         addClass([loginContainer, registerContainer], "hidden");
-        removeClass([calender], "hidden");
+        removeClass([calenderWrapper], "hidden");
         displayUserIcons(isAuthUser);
         renderMonthCal();
     } else {
@@ -34,19 +43,20 @@ const displayUserIcons = (user) => {
         </button>
     </div>
     <div id="logoutWrapper" >
-        <button onclick="logout()" class="btn border-0" aria-label="Log out button">
+        <button id="logoutBtn" class="btn border-0" aria-label="Log out button">
             <img class="logout" src="assets/icons/logout.svg"  aria-hidden="true" alt=""/>
         </button>
     </div>`;
-    
+
     document
         .querySelector("#prfPageBtn")
         .addEventListener("click", () => renderAccountPage(user));
 
-}
+    document.querySelector("#logoutBtn").addEventListener("click", logout);
+};
 
-const renderAccountPage = async(user) => {
-    addClass([calender], "hidden")
+const renderAccountPage = async (user) => {
+    addClass([calenderWrapper], "hidden");
 
     // Finds the signed in user's booking from the api bookings
     const booking = await fetchData("user/booking");

@@ -1,4 +1,7 @@
-const welcomeMsg = (booking, userObj) => {
+import { toUpperCaseStr, dateToText, addClass } from "./helper.js";
+import { deleteData, addData } from "./api.js";
+
+export const welcomeMsg = (booking, userObj) => {
     const userBooking = booking?.date;
 
     document.querySelector("#welcomeMsg").innerHTML = `
@@ -15,18 +18,21 @@ const welcomeMsg = (booking, userObj) => {
         </div>
         ${
             userBooking
-                ? `<button  onclick="delBooking(this, '${booking._id}')" class="button danger-btn" >Cancel</button>`
+                ? `<button  id="delBookingBtn" class="button danger-btn" >Cancel</button>`
                 : ""
         }`;
+
+    document.querySelector("#delBookingBtn").addEventListener("click", (e) => {
+        delBooking(e.target, booking._id);
+    });
 };
 
-const delBooking = async(btn, id) => {
+const delBooking = async (btn, id) => {
     const res = await deleteData(`bookings/${id}`);
 
-    if(res.data.acknowledged) {
+    if (res.data.acknowledged) {
         /* If deletion of booking is ok, set local storage userHasBokking variable to false
         as to not disable booking-form submit btns again and update DOM accordingly */
-        
         btn.innerText = "Cancelled";
         btn.disabled = true;
         addClass([btn], "no-hover");
@@ -34,10 +40,10 @@ const delBooking = async(btn, id) => {
             "#usersBookingInfo"
         ).innerHTML = `<p>Booking succesfully deleted</p>`;
     }
-}
+};
 
-const addBooking = async (form) => {
-    const res = await addData("bookings", { date: currentDate });
+export const addBooking = async (form, choosenDate) => {
+    const res = await addData("bookings", { date: choosenDate });
 
     if (res.acknowledged) {
         // If booking is added correctly update DOM accordingly
@@ -47,7 +53,7 @@ const addBooking = async (form) => {
         dayView.querySelector(
             "p"
         ).innerHTML = `Congratulations! Your booking is confirmed for <b>${dateToText(
-            currentDate
+            choosenDate
         )}</b>.`;
         // Adds purple dot on the booked cal. day
         addClass([document.querySelector("li.active")], "booked");
