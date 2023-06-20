@@ -4,7 +4,7 @@ import { renderMonthCal } from "./calendar.js";
 import { welcomeMsg } from "./userBooking.js";
 import { clearElem, toUpperCaseStr, addClass, removeClass } from "./helper.js";
 
-import { registerContainer, loginContainer } from "./variables.js";
+import { registerContainer } from "./variables.js";
 
 const calenderWrapper = document.querySelector("#calenderWrapper");
 const userIcons = document.querySelector("#userIcons");
@@ -23,7 +23,7 @@ export const loadPage = async () => {
     const isAuthUser = await checkAuthentication();
     // console.log("isAuth", isAuthUser);
     if (isAuthUser.acknowledged) {
-        addClass([loginContainer, registerContainer], "hidden");
+        addClass([ registerContainer], "hidden");
         removeClass([calenderWrapper], "hidden");
         displayUserIcons(isAuthUser);
         renderMonthCal();

@@ -1,10 +1,9 @@
 import { loadPage } from "./userSession.js";
 import { alterMonth } from "./calendar.js";
 import { toggleClass } from "./helper.js";
-import { loginUser } from "./login.js";
 import { registerUser } from "./register.js";
 
-import { registerContainer, loginContainer } from "./variables.js";
+import { registerContainer } from "./variables.js";
 
 
 loadPage();
@@ -17,14 +16,9 @@ document.querySelector("#nextMonthBtn").addEventListener("click", () => {
 });
 
 // ----------------------- LOGIN / REGISTER USER -----------------------
-const loginForm = document.querySelector("#loginForm");
 const registerUserForm = document.querySelector("#registerUser");
 
-loginForm.addEventListener("submit", (e) => {
-    e.preventDefault()
 
-    loginUser();
-})
 registerUserForm.addEventListener("submit", (e) => {
     e.preventDefault()
 
@@ -33,11 +27,9 @@ registerUserForm.addEventListener("submit", (e) => {
 
 // ----------------------- TOGGLE BETWEEN REGISTER / LOGIN VIEW -----------------------
 document.querySelector("#loginLink").addEventListener("click", () => {
-    toggleClass([registerContainer, loginContainer], "hidden");
+    toggleClass([registerContainer], "hidden");
 });
-document.querySelector("#registerLink").addEventListener("click", () => {
-    toggleClass([registerContainer, loginContainer], "hidden");
-});
+
 
 document.querySelector("#logo").addEventListener("click", () => {
     location.reload();

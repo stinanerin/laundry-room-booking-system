@@ -52,17 +52,3 @@ export const dateToText = (dateStr) => {
     }).format(new Date(dateStr));
 }
 
-// ----------------------- ERROR MESSAGE BOX FORMS -----------------------
-export const displayError = (wrapper, message) => {
-    wrapper.innerHTML = `
-    <div class="alert alert-danger container" role="alert">
-        <div class="row">
-            <div class="col-auto">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <div class="col">
-                <span> ${message}</span>
-            </div>
-        </div>
-    </div>`
-}
