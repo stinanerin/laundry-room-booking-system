@@ -62,7 +62,7 @@ export default class extends AbstractView {
 
             if (res.acknowledged) {
                 console.log("user logged in");
-                navigateTo("/calendar");
+                navigateTo("/frontend/calendar");
             } else if (res.customError) {
                 console.log("email / pwd do not match");
                 displayAlert(loginAlert, res.error);

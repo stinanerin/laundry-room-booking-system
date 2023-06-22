@@ -18,12 +18,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!--  CSS -->
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="/styles/style.css">
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- JS -->   
-    <script type="module" src="js/main.js" defer></script>
-    <script type="module" src="js/router.js" defer></script>
+    <!-- <script type="module" src="js/main.js" defer></script> -->
+    <script type="module" src="/js/router.js" defer></script>
     
 </head>
 <body>
@@ -120,59 +120,14 @@
                     </div>
                 </div>
 
-
-                <!--! LOGIN FORM -->
-
                 
             </div>
 
-            <div id="welcomeMsg" class="my-5 text-center">
+            <!-- <div id="welcomeMsg" class="my-5 text-center">
                 
-            </div>
+            </div> -->
 
-            <div id="calenderWrapper" class="container main hidden">
-                <div class="row">
-                    <!--! CALENDER-->
-                    <div id="calender" class="calendar container">
-                        <!-- HEADER MONTH - CONTROLLER-->
-                        <header class="row d-flex align-items-center m-0 my-5">
-                            <div class="col-auto text-start"><button class="btn border-0" id="prevMonthBtn"><i class="fas fa-angle-left"></i></button></div>
-                            <div class="month-header col text-center"></div>
-                            <div class="col-auto text-end"><button class="btn border-0" id="nextMonthBtn"><i class="fas fa-angle-right"></i></button></div>
-                        </header>
-
-                        <!-- WEEKDAYS-->
-                        <div class="weekdays row text-center mb-3 gx-0">
-                            <div class="col"><h3>M</h3></div>
-                            <div class="col"><h3>T</h3></div>
-                            <div class="col"><h3>W</h3></div>
-                            <div class="col"><h3>T</h3></div>
-                            <div class="col"><h3>F</h3></div>
-                            <div class="col"><h3>S</h3></div>
-                            <div class="col"><h3>S</h3></div>
-                        </div>
-                        <!-- CALENDER DAYS GRID-->
-                        <ul id="calenderDaysGrid" class="calender-days-grid text-center p-0">
-                            <!-- Grid inserted via JS -->                        
-                        </ul>
-                    </div>
-                </div>
-                <!-- INSTRUCTIONS-->
-                <div class="instructions container">
-                    <div class="row">
-                        <div class="col-auto booked"></div>
-                        <p class="col-auto"><b>Your confirmed booking</b></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <!-- DAY VIEW -->
-                    <div class="day-view" id="dayView">
-                        <!-- Form inserted via JS -->
-                    </div>
-                    
-                </div>
-            </div>
-        </div>  
+           
 
     </main>
 

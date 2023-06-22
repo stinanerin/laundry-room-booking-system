@@ -9,7 +9,7 @@ import { registerContainer } from "./variables.js";
 const calenderWrapper = document.querySelector("#calenderWrapper");
 const userIcons = document.querySelector("#userIcons");
 
-// ----------------------- CHECK ONGOING USER SESSION -----------------------
+//!remove
 const checkAuthentication = async () => {
     try {
         const res = await fetchData("user/active");
