@@ -1,4 +1,3 @@
-// export const dayGrid = document.querySelector("#calenderDaysGrid");
 export const loginContainer = document.querySelector("#loginWrapper");
 export const registerContainer = document.querySelector("#registerWrapper");
 export const app = document.querySelector("#app")
