@@ -8,8 +8,8 @@ export default class extends AbstractView {
     async getHtml() {
         return `
             <h2>Login Required</h2>
-            <p>Please login to access this page.</p>
-            <div class="btn-wrapper"><a href="/login" class="btn" data-link>Login</a></div>
+            <p>Please login to access laundry booking system.</p>
+            <div><a href="/frontend/" class="button primary-btn" data-link>Login</a></div>
         `;
     }
 }

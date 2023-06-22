@@ -1,6 +1,13 @@
 import { addData } from "./api.js";
 
 export const logout = async () => {
-    await addData("user/logout");
-    location.reload();
+    try {
+        await addData("user/logout");
+        location.reload();
+    } catch (error) {
+        // Handle any network or server errors
+        console.error("Log out error:", error);
+        //todo modal?
+    }
 };
+
