@@ -4,6 +4,7 @@ import { logout } from "./logout.js";
 import loginUser from "./views/loginUser.js";
 import calendar from "./views/calendar.js";
 import authReq from "./views/authRequired.js";
+import registerUser from "./views/registerUser.js";
 
 import { app } from "./variables.js";
 import { toUpperCaseStr } from "./helper.js";
@@ -26,10 +27,10 @@ const router = async () => {
             path: "/",
             view: loginUser,
         },
-        // {
-        //     path: "/register",
-        //     view: registerUser,
-        // },
+        {
+            path: "/register",
+            view: registerUser,
+        },
         
     ];
 

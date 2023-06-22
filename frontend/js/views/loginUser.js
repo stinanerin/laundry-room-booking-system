@@ -11,7 +11,7 @@ export default class extends AbstractView {
     }
     async getHtml() {
         return `
-            <div id="loginWrapper" class="form-wrapper">
+            <div class="form-wrapper">
                     <form class="container main" id="loginForm">
                         <h2 class="form-heading">Welcome back</h2>
                         <div class="row gy-3 ">
@@ -36,7 +36,7 @@ export default class extends AbstractView {
                     </form>
                     <!-- LINK REGISTER FORM  -->
                     <div class="text-center pb-5">
-                        <p>Don't have an account? <a class="link" data-link href="/registerUser" id="registerLink">Register now</a></p>
+                        <p>Don't have an account? <a class="link" data-link href="/frontend/register">Register now</a></p>
                     </div>
                 </div>`;
     }
