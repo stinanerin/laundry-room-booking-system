@@ -5,6 +5,7 @@ import loginUser from "./views/loginUser.js";
 import calendar from "./views/calendar.js";
 import authReq from "./views/authRequired.js";
 import registerUser from "./views/registerUser.js";
+import userProfile from "./views/userProfile.js";
 
 import { app } from "./variables.js";
 import { toUpperCaseStr } from "./helper.js";
@@ -30,6 +31,10 @@ const router = async () => {
         {
             path: "/register",
             view: registerUser,
+        },
+        {
+            path: "/profile",
+            view: userProfile,
         },
         
     ];
@@ -68,9 +73,9 @@ const router = async () => {
             <p class="m-0 p-sm-2 text-center" id="userName"><b>${
                 toUpperCaseStr(userRes.user).split(" ")[0]
             }</b></p>
-            <button id="prfPageBtn" class="btn border-0" aria-label="Account page button">
+            <a href="/frontend/profile" class="btn border-0" aria-label="Account page button">
                 <i class="fa-regular fa-user"></i>
-            </button>
+            </a>
         </div>
         <div id="logoutWrapper" >
             <button id="logoutBtn" class="btn border-0" aria-label="Log out button">
@@ -105,7 +110,7 @@ const router = async () => {
     const currentView = new match.route.view();
 
     // Set the current views HTML as the main div:s HTML
-    app.innerHTML = await currentView.getHtml();
+    app.innerHTML = await currentView.getHtml(userRes);
 
     // If addEventListener method exists on currentView instance - invoke them
     if (currentView.addEventListeners) currentView.addEventListeners();

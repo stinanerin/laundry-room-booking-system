@@ -1,7 +1,8 @@
 import AbstractView from "./AbstractView.js";
 
-import { addClass} from "../helper.js";
+import { addClass, dateToText } from "../helper.js";
 import { fetchData } from "../api.js";
+import { addBooking } from "../userBooking.js";
 
 import { app, months, month, year, today, updateMonth, weekdays } from "../variables.js";
 
