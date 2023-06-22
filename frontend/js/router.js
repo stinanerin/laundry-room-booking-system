@@ -34,21 +34,23 @@ const router = async () => {
         },
         {
             path: "/profile",
+            requiresAuth: true,
             view: userProfile,
         },
-        
     ];
+
+    const urlRoute = location.pathname.split("/frontend")[1]
 
     // Test each route for potential match
     // Loops through each route and returns an object with the route and a boolean isMatch value
     const potentialMatches = routes.map((route) => {
         return {
             route: route,
-            // Does the current url location match a specified route
-            isMatch: location.pathname.split("/frontend")[1] === route.path,
+            // Does the current urlRoute match a specified route
+            isMatch: urlRoute === route.path,
         };
     });
-    console.log("url", location.pathname.split("/frontend")[1]);
+    console.log("urlRoute", urlRoute);
     console.log("potentialMatches", potentialMatches);
     // Finds the route with the isMatch: true key/value pair
     let match = potentialMatches.find(
@@ -88,9 +90,21 @@ const router = async () => {
             e.preventDefault();
             logout();
         });
-    }
-
-    if (match.route.requiresAuth && !checkAuth) {
+        if (urlRoute === "/") {
+            // Redirects auth user trying to access start page to calendar
+            console.log(
+                "Redirect auth user trying to access start page to calendar"
+            );
+            match = {
+                isMatch: true,
+                route: {
+                    path: "/calendar",
+                    view: calendar,
+                    requiresAuth: true,
+                },
+            };
+        }
+    } else if (match.route.requiresAuth && !checkAuth) {
         /* If route requires authenticated user & user is not authenticated(signed in),
         prevent user from viewing route */
         console.log("ej auth");
@@ -98,15 +112,14 @@ const router = async () => {
             isMatch: true,
             route: {
                 path: match.route.path,
-                requiresAuth: true,
                 view: authReq,
             },
         };
         console.log(match);
     }
 
-    // Creates new instance of the view: importedClass - at the match route
     console.log("currentView", match.route);
+    // Creates new instance of the view: importedClass - at the match route
     const currentView = new match.route.view();
 
     // Set the current views HTML as the main div:s HTML
