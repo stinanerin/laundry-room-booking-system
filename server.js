@@ -9,7 +9,10 @@ app.use(
     express.static(path.join(__dirname, "frontend"), {
         setHeaders: (res, filePath) => {
             if (filePath.endsWith(".js")) {
-                res.setHeader("Content-Type", "application/javascript");
+                res.setHeader(
+                    "Content-Type",
+                    "application/javascript; charset=utf-8"
+                );
             }
             if (filePath.endsWith(".css")) {
                 res.setHeader("Content-Type", "text/css");
