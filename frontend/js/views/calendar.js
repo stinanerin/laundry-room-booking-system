@@ -1,15 +1,30 @@
 import AbstractView from "./AbstractView.js";
 
-import { addClass, dateToText } from "../helper.js";
+import {
+    addClass,
+    dateToText,
+    deactivatePassedDates,
+    checkIfDayisToday,
+    isDayBooked,
+} from "../helper.js";
 import { fetchData } from "../api.js";
 import { addBooking } from "../userBooking.js";
 
-import { app, months, month, year, today, updateMonth, weekdays } from "../variables.js";
+import {
+    app,
+    months,
+    month,
+    year,
+    today,
+    updateMonth,
+    weekdays,
+} from "../variables.js";
 
 export default class extends AbstractView {
     constructor() {
         super();
         this.setTitle("Calendar");
+        this.currentDate = null; // Define currentDate as a class property
     }
     generateMonthViewDates(year, month) {
         // The previous months last date
@@ -71,6 +86,85 @@ export default class extends AbstractView {
             displayModal();
         }
     }
+    async renderDayView(li) {
+        const response = await fetchData("user/booking");
+        const userHasBooking = response.booking;
+
+        // If another cal-day has the active class - remove it
+        document.querySelector(".active")?.classList.remove("active");
+        addClass([li], "active");
+        // Get the name of the month based on the clicked day's class
+        const monthName = li.classList.contains("prevMonth")
+            ? months[month - 1]
+            : li.classList.contains("nextMonth")
+            ? months[month + 1]
+            : months[month];
+
+        this.currentDate = new Date(
+            year,
+            months.indexOf(monthName),
+            li.innerText
+        );
+        const dayView = document.querySelector("#dayView");
+
+        dayView.innerHTML = `
+            <form id="bookTime" class="container">
+                <div class="mb-5">
+                    <h2 class="row gx-0 mb-4">
+                        <span class="weekday col">${
+                            weekdays[this.currentDate.getDay()]
+                        }</span>
+                        <span class="date col text-end">${
+                            li.innerText
+                        } ${monthName}</span>
+                    </h2>
+                    <div class="row gx-0 text-center">
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <input type="radio" name="time-slot" id="morning" value="08" required/>
+                            <label for="morning">08</label>
+                        </div>
+                        <div class="col d-flex justify-content-center align-items-center"/>
+                            <input type="radio" name="time-slot" id="noon" value="12">
+                            <label for="noon">12</label>
+                        </div>
+                        <div class="col d-flex justify-content-center align-items-center"/>
+                            <input type="radio" name="time-slot" id="evening" value="17">
+                            <label for="evening">17</label>
+                        </div>
+                        <div class="mt-4">
+                            <p class="m-0"></p>
+                        </div>
+                        <div class="mt-4"><button type="submit" class="button primary-btn" ${
+                            userHasBooking ? "disabled" : ""
+                        }>Book</button></div>
+                    </div>
+                </div>
+            </form>`;
+
+        const res = await fetchData("bookings");
+        const bookings = res.bookings;
+
+        //todo - break out as function
+        let bookedTimes;
+        // Checks if currentDate is already booked
+        // Returns every date obj that matches the current looped date - otherwise []
+        const match = bookings.filter(
+            (date) =>
+                new Date(date.date).toLocaleDateString() ===
+                this.currentDate.toLocaleDateString()
+        );
+        // If bookings exists in currentDate - get the time slots
+        match.length > 0
+            ? (bookedTimes = match.map((date) =>
+                  new Date(date.date).getHours()
+              ))
+            : "";
+        // If current date is already booked - disable radio for booked time slots
+        bookedTimes ? diasableElem(bookedTimes) : "";
+
+        // Applies the event listeners for radio btns and booking form
+        this.addEventListeners();
+    }
     async getHtml() {
         try {
             const response = await fetchData("user/booking");
@@ -82,7 +176,6 @@ export default class extends AbstractView {
             // Generates calendar month view
             const html = `
             <div class="container">
-
                 <div class="row">
                     <!--! CALENDER-->
                     <div class="calendar container">
@@ -127,11 +220,13 @@ export default class extends AbstractView {
                                         )} ${checkIfDayisToday(
                                             year,
                                             month,
-                                            date
+                                            date,
+                                            today
                                         )}${deactivatePassedDates(
                                             year,
                                             month,
-                                            date
+                                            date,
+                                            today
                                         )} ${
                                             prevMonth
                                                 ? "prevMonth"
@@ -182,157 +277,45 @@ export default class extends AbstractView {
                 this.alterMonth("add");
             });
         // ----------------------- DAY VIEW -----------------------
-        const dayGrid = document
-            .querySelector("#calendarDaysGrid")
-        const dayView = document.querySelector("#dayView");
+        document.querySelectorAll(".day:not(.deactivated)").forEach((li) => {
+            li.addEventListener("click", () => {
+                this.renderDayView(li);
+            });
+        });
+        // ----------------------- UPDATE MSG USER -----------------------
+        const radioButtons = document.querySelectorAll(
+            "input[type='radio'][name='time-slot']"
+        );
+        radioButtons.forEach((slot) => {
+            slot.addEventListener("change", (e) =>
+                this.updateSelectedDateTime(e.target)
+            );
+        });
+        // ----------------------- BOOKING FORM -----------------------
+        document
+            .querySelector("#bookTime")
+            ?.addEventListener("submit", async (e) => {
+                e.preventDefault();
 
-        dayGrid
-            .querySelectorAll(".day:not(.deactivated)")
-            .forEach((li) => {
-                li.addEventListener("click", async () => {
-                    //todo bryt ut till funktion
-                    const response = await fetchData("user/booking");
-                    const userHasBooking = response.booking;
-
-                    // If another cal-day has the active class - remove it
-                    dayGrid
-                        .querySelector(".active")
-                        ?.classList.remove("active");
-                    addClass([li], "active");
-                    // Get the name of the month based on the clicked day's class
-                    const monthName = li.classList.contains("prevMonth")
-                        ? months[month - 1]
-                        : li.classList.contains("nextMonth")
-                        ? months[month + 1]
-                        : months[month];
-
-                    const currentDate = new Date(
-                        year,
-                        months.indexOf(monthName),
-                        li.innerText
-                    );
-                    dayView.innerHTML = `
-                    <form id="bookTime" class="container">
-                        <div class="mb-5">
-                            <h2 class="row gx-0 mb-4">
-                                <span class="weekday col">${
-                                    weekdays[currentDate.getDay()]
-                                }</span>
-                                <span class="date col text-end">${
-                                    li.innerText
-                                } ${monthName}</span>
-                            </h2>
-                            <div class="row gx-0 text-center">
-                                <div class="col d-flex justify-content-center align-items-center">
-                                    <input type="radio" name="time-slot" id="morning" value="08" required/>
-                                    <label for="morning">08</label>
-                                </div>
-                                <div class="col d-flex justify-content-center align-items-center"/>
-                                    <input type="radio" name="time-slot" id="noon" value="12">
-                                    <label for="noon">12</label>
-                                </div>
-                                <div class="col d-flex justify-content-center align-items-center"/>
-                                    <input type="radio" name="time-slot" id="evening" value="17">
-                                    <label for="evening">17</label>
-                                </div>
-                                <div class="mt-4">
-                                    <p class="m-0"></p>
-                                </div>
-                                <div class="mt-4"><button type="submit" class="button primary-btn" ${
-                                    userHasBooking ? "disabled" : ""
-                                }>Book</button></div>
-                            </div>
-                        </div>
-                    </form>`;
-                    this.initateFormEventListener(
-                        document.querySelector("#bookTime"),
-                        currentDate
-                    );
-                    this.updateSelectedDateTime(currentDate);
-
-                    const res = await fetchData("bookings");
-                    const bookings = res.bookings;
-
-                    //todo - break out as function
-                    let bookedTimes;
-                    // Checks if currentDate is already booked
-                    // Returns every date obj that matches the current looped date - otherwise []
-                    const match = bookings.filter(
-                        (date) =>
-                            new Date(date.date).toLocaleDateString() ===
-                            currentDate.toLocaleDateString()
-                    );
-                    // If bookings exists in currentDate - get the time slots
-                    match.length > 0
-                        ? (bookedTimes = match.map((date) =>
-                              new Date(date.date).getHours()
-                          ))
-                        : "";
-                    // If current date is already booked - disable radio for booked time slots
-                    bookedTimes ? diasableElem(bookedTimes) : "";
-                });
+                addBooking(e.target, this.currentDate);
             });
     }
-    // Improve - can i add it to other eventlisteners somehow
-    updateSelectedDateTime (currentDate) {
-    document
-        .querySelectorAll("input[type='radio'][name='time-slot']")
-        .forEach((slot) =>
-            slot.addEventListener("change", async (e) => {
-                // Gets the latest data on wether the signed in user har a bookingfrom database to always show the most up-to-date information,
-                const response = await fetchData("user/booking");
-                const userHasBooking = response.booking;
+    async updateSelectedDateTime(timeslot) {
+        //? Improve - can i add it to other eventlisteners somehow
+        // Gets the latest data on wether the signed in user har a bookingfrom database to always show the most up-to-date information,
+        const response = await fetchData("user/booking");
+        const userHasBooking = response.booking;
+        console.log("before", this.currentDate);
 
-                /* Sets currentDate's time to the selected radio buttons time slot value */
-                currentDate.setHours(e.target.value, 0, 0);
+        /* Sets currentDate's time to the selected radio buttons time slot value */
+        this.currentDate.setHours(timeslot.value, 0, 0);
+        console.log("after", this.currentDate);
 
-                // Displays a message to the user based on whether they have a booking or not
-                dayView.querySelector("p").innerHTML = !userHasBooking
-                    ? `You've selected <b>${dateToText(
-                          currentDate
-                      )}</b>. To complete the process, please book this date.`
-                    : "You already have a laundry booking. </br>Please cancel it on your account page before making a new one. ";
-            })
-        );
-    };
-    initateFormEventListener (bookingForm, choosenDate) {
-        bookingForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            addBooking(e.target, choosenDate);
-        });
-    };
-
-}
-
-// ----------------------- CHECKS IF D1 IS PASSED D2 -----------------------
-const hasDatePassed = (d1, d2) => {
-    // Create a new date of the existing dates to cancel out the time
-    return new Date(d1.toDateString()) < new Date(d2.toDateString());
-};
-
-// ----------------------- DEACTIVATES LI CAL DATE IF DATE HAS ALREADY PASSED -----------------------
-const deactivatePassedDates = (year, month, day) => {
-    const date = new Date(year, month, day);
-    // Create a new date of the existing dates to cancel out the time
-    return hasDatePassed(date, today) ? "deactivated" : "";
-};
-
-// ----------------------- DETERMINES IF A DAY IS TODAY' DATE -----------------------
-const checkIfDayisToday = (year, month, day) => {
-    return areDatesEqual(today, new Date(year, month, day)) ? "today" : "";
-};
-
-// ----------------------- DETERMINES IF DAY IS BOOKED -----------------------
-const isDayBooked = (bookedTime, year, month, day) => {
-    if (bookedTime) {
-        return areDatesEqual(new Date(bookedTime), new Date(year, month, day))
-            ? "booked"
-            : "";
+        // Displays a message to the user based on whether they have a booking or not
+        dayView.querySelector("p").innerHTML = !userHasBooking
+            ? `You've selected <b>${dateToText(
+                  this.currentDate
+              )}</b>. To complete the process, please book this date.`
+            : "You already have a laundry booking. </br>Please cancel it on your account page before making a new one. ";
     }
-};
-
-// ----------------------- DETERMINES IF TWO DATES ARE EQUAL -----------------------
-const areDatesEqual = (d1, d2) => {
-    return d1.toDateString() === d2.toDateString();
-};
+}

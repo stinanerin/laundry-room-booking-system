@@ -66,7 +66,6 @@ const router = async () => {
     const checkAuth = userRes.acknowledged;
 
     console.log("checkAuth", checkAuth);
-
     if (checkAuth) {
         const userIcons = document.querySelector("#userIcons");
 
@@ -90,7 +89,7 @@ const router = async () => {
             e.preventDefault();
             logout();
         });
-        if (urlRoute === "/") {
+        if (urlRoute === "/" || urlRoute === "/register") {
             // Redirects auth user trying to access start page to calendar
             console.log(
                 "Redirect auth user trying to access start page to calendar"

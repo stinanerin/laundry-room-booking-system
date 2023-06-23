@@ -49,7 +49,7 @@ export default class extends AbstractView {
 
                      <!-- LINK LOGIN -->
                      <div class="text-center pb-5">
-                        <p>Already registered? <a class="link" href="/frontend/loginUser">Log in here</a></p>
+                        <p>Already registered? <a class="link" href="/frontend/">Log in here</a></p>
                     </div>
                 </div>`;
     }
