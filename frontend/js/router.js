@@ -39,18 +39,25 @@ const router = async () => {
         },
     ];
 
-    const urlRoute = location.pathname.split("/frontend")[1]
-
+    const urlRoute = location.pathname;
+    
     // Test each route for potential match
     // Loops through each route and returns an object with the route and a boolean isMatch value
     const potentialMatches = routes.map((route) => {
-        return {
-            route: route,
-            // Does the current urlRoute match a specified route
-            isMatch: urlRoute === route.path,
-        };
+        if (urlRoute.split("/")[1] === route.path.split("/")[1]) {
+            return {
+                route: route,
+                // Does the current url location match a specified route
+                isMatch: true,
+            };
+        } else {
+            return {
+                route: route,
+                // Does the current url location match a specified route
+                isMatch: urlRoute === route.path,
+            };
+        }
     });
-    console.log("urlRoute", urlRoute);
     console.log("potentialMatches", potentialMatches);
     // Finds the route with the isMatch: true key/value pair
     let match = potentialMatches.find(
@@ -74,7 +81,7 @@ const router = async () => {
             <p class="m-0 p-sm-2 text-center" id="userName"><b>${
                 toUpperCaseStr(userRes.user).split(" ")[0]
             }</b></p>
-            <a href="/frontend/profile" class="btn border-0" aria-label="Account page button">
+            <a href="/profile" class="btn border-0" aria-label="Account page button">
                 <i class="fa-regular fa-user"></i>
             </a>
         </div>
@@ -89,6 +96,7 @@ const router = async () => {
             e.preventDefault();
             logout();
         });
+        console.log(urlRoute);
         if (urlRoute === "/" || urlRoute === "/register") {
             // Redirects auth user trying to access start page to calendar
             console.log(

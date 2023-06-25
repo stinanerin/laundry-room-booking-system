@@ -49,7 +49,7 @@ export default class extends AbstractView {
 
                      <!-- LINK LOGIN -->
                      <div class="text-center pb-5">
-                        <p>Already registered? <a class="link" href="/frontend/">Log in here</a></p>
+                        <p>Already registered? <a class="link" href="/">Log in here</a></p>
                     </div>
                 </div>`;
     }
@@ -78,7 +78,7 @@ export default class extends AbstractView {
     
             if (res.acknowledged) {
                 console.log("user registered");
-                navigateTo("/frontend/calendar");
+                navigateTo("/calendar");
             } else if (res.customError) {
                 console.log("email already exists");
                 displayAlert(emailAlert, res.error);

@@ -36,7 +36,7 @@ export default class extends AbstractView {
                     </form>
                     <!-- LINK REGISTER FORM  -->
                     <div class="text-center pb-5">
-                        <p>Don't have an account? <a class="link" data-link href="/frontend/register">Register now</a></p>
+                        <p>Don't have an account? <a class="link" data-link href="/register">Register now</a></p>
                     </div>
                 </div>`;
     }
@@ -62,7 +62,7 @@ export default class extends AbstractView {
 
             if (res.acknowledged) {
                 console.log("user logged in");
-                navigateTo("/frontend/calendar");
+                navigateTo("/calendar");
             } else if (res.customError) {
                 console.log("email / pwd do not match");
                 displayAlert(loginAlert, res.error);

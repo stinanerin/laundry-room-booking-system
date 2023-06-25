@@ -2,7 +2,7 @@
   "name": "laundry",
   "version": "1.0.0",
   "description": "laundry booking system",
-  "main": "server.js",
+  "main": "router.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
