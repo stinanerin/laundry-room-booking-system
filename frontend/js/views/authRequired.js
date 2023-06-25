@@ -9,7 +9,7 @@ export default class extends AbstractView {
         return `
             <h2>Login Required</h2>
             <p>Please login to access laundry booking system.</p>
-            <div><a href="/" class="button primary-btn" data-link>Login</a></div>
+            <a href="/" class="button primary-btn" data-link >Login</a>
         `;
     }
 }

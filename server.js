@@ -4,10 +4,9 @@ import path from "path";
 // Resolving the current directory path.
 const __dirname = path.resolve();
 
-
 const app = express();
 
-app.use(express.static("frontend", { type: "module" }));
+app.use(express.static("frontend"));
 
 
 app.get("/*", (req, res) => {

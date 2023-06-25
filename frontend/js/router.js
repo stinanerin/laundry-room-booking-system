@@ -6,12 +6,14 @@ import calendar from "./views/calendar.js";
 import authReq from "./views/authRequired.js";
 import registerUser from "./views/registerUser.js";
 import userProfile from "./views/userProfile.js";
+import pageNotFound from "./views/404.js";
 
 import { app } from "./variables.js";
-import { toUpperCaseStr } from "./helper.js";
+import { toUpperCaseStr, clearElem } from "./helper.js";
 
 // Navigates to a specific url and updates the history
 export const navigateTo = (url) => {
+    // Move history here - don't want to push the users requested route to the history, but the one they end up on
     history.pushState(null, null, url);
     router();
 };
@@ -37,10 +39,15 @@ const router = async () => {
             requiresAuth: true,
             view: userProfile,
         },
+        {
+            path: "/404",
+            view: pageNotFound,
+        },
+        
     ];
 
     const urlRoute = location.pathname;
-    
+
     // Test each route for potential match
     // Loops through each route and returns an object with the route and a boolean isMatch value
     const potentialMatches = routes.map((route) => {
@@ -58,24 +65,27 @@ const router = async () => {
             };
         }
     });
-    console.log("potentialMatches", potentialMatches);
+
     // Finds the route with the isMatch: true key/value pair
     let match = potentialMatches.find(
         (potentialMatch) => potentialMatch.isMatch
     );
-    console.log("match", match);
 
-    //todo! if match is not true - 404
+    if (!match) {
+        console.log("test");
+        match = {
+            route: routes.find((route) => route.path === "/404"),
+            isMatch: true,
+        };
+    }
 
-    // console.log("match.route.requiresAuth", match.route.requiresAuth);
     const userRes = await checkAuthentication();
-    console.log(userRes);
+    console.log("userRes", userRes);
     const checkAuth = userRes.acknowledged;
 
     console.log("checkAuth", checkAuth);
+    const userIcons = document.querySelector("#userIcons");
     if (checkAuth) {
-        const userIcons = document.querySelector("#userIcons");
-
         userIcons.innerHTML = ` 
         <div class="d-flex align-items-center ">
             <p class="m-0 p-sm-2 text-center" id="userName"><b>${
@@ -92,16 +102,11 @@ const router = async () => {
         </div>`;
         //todo bryt ut?
         document.querySelector("#logoutBtn").addEventListener("click", (e) => {
-            console.log("clicked");
             e.preventDefault();
             logout();
         });
-        console.log(urlRoute);
         if (urlRoute === "/" || urlRoute === "/register") {
             // Redirects auth user trying to access start page to calendar
-            console.log(
-                "Redirect auth user trying to access start page to calendar"
-            );
             match = {
                 isMatch: true,
                 route: {
@@ -111,19 +116,25 @@ const router = async () => {
                 },
             };
         }
-    } else if (match.route.requiresAuth && !checkAuth) {
-        /* If route requires authenticated user & user is not authenticated(signed in),
-        prevent user from viewing route */
-        console.log("ej auth");
-        match = {
-            isMatch: true,
-            route: {
-                path: match.route.path,
-                view: authReq,
-            },
-        };
-        console.log(match);
+    } else {
+        // !checkAuth
+        clearElem([userIcons])
+        if (match.route.requiresAuth && !checkAuth) {
+            /* If route requires authenticated user & user is not authenticated(signed in),
+            prevent user from viewing route */
+            match = {
+                isMatch: true,
+                route: {
+                    path: match.route.path,
+                    view: authReq,
+                },
+            };
+            console.log("ej auth match", match);
+        }
     }
+    
+
+    
 
     console.log("currentView", match.route);
     // Creates new instance of the view: importedClass - at the match route

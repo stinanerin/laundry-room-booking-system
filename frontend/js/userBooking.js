@@ -3,8 +3,9 @@ import { deleteData, addData } from "./api.js";
 
 export const delBooking = async (btn, id) => {
     const res = await deleteData(`bookings/${id}`);
+    console.log(res);
 
-    if (res.data.acknowledged) {
+    if (res.acknowledged) {
         /* If deletion of booking is ok, set local storage userHasBokking variable to false
         as to not disable booking-form submit btns again and update DOM accordingly */
         btn.innerText = "Cancelled";
@@ -17,6 +18,7 @@ export const delBooking = async (btn, id) => {
 };
 
 export const addBooking = async (form, choosenDate) => {
+    console.log("choosenDate", choosenDate);
     const res = await addData("bookings", { date: choosenDate });
 
     if (res.acknowledged) {

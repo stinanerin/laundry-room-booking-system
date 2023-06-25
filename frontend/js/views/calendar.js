@@ -154,6 +154,7 @@ export default class extends AbstractView {
                 new Date(date.date).toLocaleDateString() ===
                 this.currentDate.toLocaleDateString()
         );
+        
         // If bookings exists in currentDate - get the time slots
         match.length > 0
             ? (bookedTimes = match.map((date) =>
@@ -306,11 +307,9 @@ export default class extends AbstractView {
         // Gets the latest data on wether the signed in user har a bookingfrom database to always show the most up-to-date information,
         const response = await fetchData("user/booking");
         const userHasBooking = response.booking;
-        console.log("before", this.currentDate);
 
         /* Sets currentDate's time to the selected radio buttons time slot value */
         this.currentDate.setHours(timeslot.value, 0, 0);
-        console.log("after", this.currentDate);
 
         // Displays a message to the user based on whether they have a booking or not
         dayView.querySelector("p").innerHTML = !userHasBooking

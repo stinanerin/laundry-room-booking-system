@@ -1,5 +1,3 @@
-import { displayModal } from "./modal.js";
-
 const API_BASE_URL = "https://express-booking-system-backend.herokuapp.com/api/v.1/";
 
 export const fetchData = async (route) => {
@@ -15,8 +13,7 @@ export const fetchData = async (route) => {
         }
         return res.data;
     } catch (error) {
-        console.log(error);
-        // displayModal(error.message);
+        console.log("error", error);
         return error.response.data;
     }
 }
@@ -32,10 +29,10 @@ export const deleteData = async(route) => {
         }
         console.log("deleteData res", res);
 
-        return res
+        return res.data
     } catch (error) {
-        console.log(error)
-        displayModal(error.message)
+        console.log("error", error);
+        return error.response.data;
     }
 }
 
@@ -51,7 +48,7 @@ export const addData = async (route, data) => {
         console.log("addData res", res);
         return res.data;
     } catch (error) {
-        console.error(error);
+        console.log("error", error);
         if (error.response) {
             return error.response.data;
         }
