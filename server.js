@@ -7,7 +7,7 @@ const __dirname = path.resolve();
 
 const app = express();
 
-app.use(express.static("frontend"));
+app.use(express.static("frontend", { type: "module" }));
 
 
 app.get("/*", (req, res) => {
