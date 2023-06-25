@@ -5,21 +5,7 @@ const __dirname = path.resolve();
 
 const app = express();
 
-app.use(
-    express.static(path.join(__dirname, "frontend"), {
-        setHeaders: (res, filePath) => {
-            if (filePath.endsWith(".js")) {
-                res.setHeader(
-                    "Content-Type",
-                    "application/javascript; charset=utf-8"
-                );
-            }
-            if (filePath.endsWith(".css")) {
-                res.setHeader("Content-Type", "text/css");
-            }
-        },
-    })
-);
+app.use(express.static("frontend"));
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });
