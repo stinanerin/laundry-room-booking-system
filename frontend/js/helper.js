@@ -12,7 +12,7 @@ export const createElement = (type, aClass, str, arr) => {
 };
 
 //! todo - make dynamic
-export const diasableElem = (arr) => {
+export const disableElem = (arr) => {
     document
         .querySelectorAll("input[type='radio'][name='time-slot']")
         .forEach((radio) => {

@@ -6,6 +6,7 @@ import {
     deactivatePassedDates,
     checkIfDayisToday,
     isDayBooked,
+    disableElem,
 } from "../helper.js";
 import { fetchData } from "../api.js";
 import { addBooking } from "../userBooking.js";
@@ -160,7 +161,7 @@ export default class extends AbstractView {
               ))
             : "";
         // If current date is already booked - disable radio for booked time slots
-        bookedTimes ? diasableElem(bookedTimes) : "";
+        bookedTimes ? disableElem(bookedTimes) : "";
 
         // Applies the event listeners for radio btns and booking form
         this.addEventListeners();
