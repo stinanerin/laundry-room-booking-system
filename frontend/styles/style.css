@@ -252,6 +252,7 @@ form input:active:not([type=radio]), form input:focus:not([type=radio]), form in
   form input[type=radio][disabled] {
     cursor: not-allowed;
     background-color: rgb(112, 112, 112);
+    background-color: red;
     position: relative;
     height: 13px;
     width: 13px;
@@ -269,6 +270,12 @@ form input:active:not([type=radio]), form input:focus:not([type=radio]), form in
   form input[type=radio][disabled] + label {
     cursor: not-allowed;
     color: rgb(231, 228, 228);
+  }
+  form input[type=radio][disabled].active-user:after {
+    background-color: rgb(173, 97, 227);
+  }
+  form input[type=radio][disabled].active-user + label {
+    color: rgba(218, 183, 243, 0.476);
   }
   form label {
     color: hsl(0deg, 0%, 100%);

@@ -37,7 +37,7 @@ export default class extends AbstractView {
             lastDay = new Date(year, month + 1, 0),
             lastDate = lastDay.getDate(),
             /* The remaining dates, from the next month, which happen in the current months last week.
-        If the last date is a sunday - set nexDays to a zero, as to not render any days from the next month */
+            If the last date is a sunday - set nexDays to a zero, as to not render any days from the next month */
             nextDays = 7 - (lastDay.getDay() === 0 ? 7 : lastDay.getDay());
 
         // Create an empty array to store the currently rendered months dates
@@ -101,6 +101,7 @@ export default class extends AbstractView {
             ? months[month + 1]
             : months[month];
 
+        // Update currentDate to the currently choosen cal day
         this.currentDate = new Date(
             year,
             months.indexOf(monthName),
@@ -119,6 +120,7 @@ export default class extends AbstractView {
                             li.innerText
                         } ${monthName}</span>
                     </h2>
+                    <!--todo: make dynamic rendering-->
                     <div class="row gx-0 text-center">
                         <div class="col d-flex justify-content-center align-items-center">
                             <input type="radio" name="time-slot" id="morning" value="08" required/>
@@ -148,21 +150,23 @@ export default class extends AbstractView {
         //todo - break out as function
         let bookedTimes;
         // Checks if currentDate is already booked
-        // Returns every date obj that matches the current looped date - otherwise []
+        // Returns every booked date obj that matches the current looped date - otherwise []
         const match = bookings.filter(
             (date) =>
                 new Date(date.date).toLocaleDateString() ===
                 this.currentDate.toLocaleDateString()
         );
-        
+        // console.log(match);
+
         // If bookings exists in currentDate - get the time slots
         match.length > 0
             ? (bookedTimes = match.map((date) =>
                   new Date(date.date).getHours()
               ))
             : "";
-        // If current date is already booked - disable radio for booked time slots
-        bookedTimes ? disableElem(bookedTimes) : "";
+        /* If current date is already booked - disable radio for booked time slots.
+        If the active auth user has booked the time slot color it purple */
+        bookedTimes ? disableElem(bookedTimes, userHasBooking.date, this.currentDate) : "";
 
         // Applies the event listeners for radio btns and booking form
         this.addEventListeners();
@@ -200,6 +204,7 @@ export default class extends AbstractView {
                             <div class="col"><h3>S</h3></div>
                             <div class="col"><h3>S</h3></div>
                         </div>
+
                         <!-- CALENDER DAYS GRID-->
                         <ul id="calendarDaysGrid" class="calender-days-grid text-center p-0">
                             ${monthDatesArr
@@ -243,18 +248,14 @@ export default class extends AbstractView {
                     </div>
                 </div>
                 <!-- INSTRUCTIONS-->
-                <div class="instructions container">
-                    <div class="row">
-                        <div class="col-auto booked"></div>
-                        <p class="col-auto"><b>Your confirmed booking</b></p>
-                    </div>
-                </div>
+                ${
+                    usersBooking
+                        ? '<div class="instructions container"><div class="row"><div class="col-auto booked"></div><p class="col-auto"><b>Your confirmed booking</b></p></div></div>'
+                        : ""
+                }
                 <div class="row">
                     <!-- DAY VIEW -->
-                    <div class="day-view" id="dayView">
-                        <!-- Form inserted via JS -->
-                    </div>
-                    
+                    <div class="day-view" id="dayView"></div>
                 </div>
             </div>`;
 
@@ -268,39 +269,52 @@ export default class extends AbstractView {
     }
     addEventListeners() {
         // ----------------------- ALTER MONTH -----------------------
-        document
-            .querySelector("#prevMonthBtn")
-            .addEventListener("click", () => {
-                this.alterMonth("prev");
-            });
-        document
-            .querySelector("#nextMonthBtn")
-            .addEventListener("click", () => {
-                this.alterMonth("add");
-            });
+        const prevMonthBtn = document.querySelector("#prevMonthBtn");
+        if (prevMonthBtn) {
+            prevMonthBtn.removeEventListener(
+                "click",
+                this.handlePrevMonthClick
+            );
+            prevMonthBtn.addEventListener("click", this.handlePrevMonthClick);
+        }
+
+        const nextMonthBtn = document.querySelector("#nextMonthBtn");
+        if (nextMonthBtn) {
+            nextMonthBtn.removeEventListener(
+                "click",
+                this.handleNextMonthClick
+            );
+            nextMonthBtn.addEventListener("click", this.handleNextMonthClick);
+        }
+
         // ----------------------- DAY VIEW -----------------------
-        document.querySelectorAll(".day:not(.deactivated)").forEach((li) => {
-            li.addEventListener("click", () => {
-                this.renderDayView(li);
-            });
+        const days = document.querySelectorAll(".day:not(.deactivated)");
+        days.forEach((li) => {
+            li.removeEventListener("click", this.handleDayClick);
+            li.addEventListener("click", this.handleDayClick);
         });
+
         // ----------------------- UPDATE MSG USER -----------------------
         const radioButtons = document.querySelectorAll(
             "input[type='radio'][name='time-slot']"
         );
         radioButtons.forEach((slot) => {
-            slot.addEventListener("change", (e) =>
-                this.updateSelectedDateTime(e.target)
-            );
+            slot.removeEventListener("change", this.handleTimeSlotChange);
+            slot.addEventListener("change", this.handleTimeSlotChange);
         });
-        // ----------------------- BOOKING FORM -----------------------
-        document
-            .querySelector("#bookTime")
-            ?.addEventListener("submit", async (e) => {
-                e.preventDefault();
 
-                addBooking(e.target, this.currentDate);
-            });
+        // ----------------------- BOOKING FORM -----------------------
+        const bookingForm = document.querySelector("#bookTime");
+        if (bookingForm) {
+            bookingForm.removeEventListener(
+                "submit",
+                this.handleBookingFormSubmit
+            );
+            bookingForm.addEventListener(
+                "submit",
+                this.handleBookingFormSubmit
+            );
+        }
     }
     async updateSelectedDateTime(timeslot) {
         //? Improve - can i add it to other eventlisteners somehow
@@ -318,4 +332,25 @@ export default class extends AbstractView {
               )}</b>. To complete the process, please book this date.`
             : "You already have a laundry booking. </br>Please cancel it on your account page before making a new one. ";
     }
+    //! 
+    handlePrevMonthClick = () => {
+        this.alterMonth("prev");
+    };
+
+    handleNextMonthClick = () => {
+        this.alterMonth("add");
+    };
+
+    handleDayClick = (event) => {
+        this.renderDayView(event.currentTarget);
+    };
+
+    handleTimeSlotChange = (event) => {
+        this.updateSelectedDateTime(event.target);
+    };
+
+    handleBookingFormSubmit = async (event) => {
+        event.preventDefault();
+        addBooking(event.target, this.currentDate);
+    };
 }

@@ -22,8 +22,10 @@ export const addBooking = async (form, choosenDate) => {
     const res = await addData("bookings", { date: choosenDate });
 
     if (res.acknowledged) {
+        const radioBtn = form.querySelector("input[type='radio']:checked");
         // If booking is added correctly update DOM accordingly
-        form.querySelector("input[type='radio']:checked").disabled = true;
+        addClass([radioBtn], "active-user");
+        radioBtn.disabled = true;
         form.querySelector("button[type='submit']").disabled = true;
         form.querySelector("button[type='submit']").innerText = "Booked";
         dayView.querySelector(
