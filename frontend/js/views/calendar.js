@@ -166,7 +166,7 @@ export default class extends AbstractView {
             : "";
         /* If current date is already booked - disable radio for booked time slots.
         If the active auth user has booked the time slot color it purple */
-        bookedTimes ? disableElem(bookedTimes, userHasBooking.date, this.currentDate) : "";
+        bookedTimes ? disableElem(bookedTimes, userHasBooking?.date, this.currentDate) : "";
 
         // Applies the event listeners for radio btns and booking form
         this.addEventListeners();
