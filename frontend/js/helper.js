@@ -12,12 +12,26 @@ export const createElement = (type, aClass, str, arr) => {
 };
 
 //! todo - make dynamic
-export const disableElem = (arr) => {
-    document
-        .querySelectorAll("input[type='radio'][name='time-slot']")
-        .forEach((radio) => {
-            arr.includes(+radio.value) ? (radio.disabled = true) : "";
-        });
+export const disableElem = (arr, userBooking, currentDate) => {
+    const isEqual = areDatesEqual(
+        new Date(userBooking),
+        currentDate
+    );
+    const timeMatch = arr.find(
+        (time) => time === new Date(userBooking).getHours()
+    );
+    const radios = document.querySelectorAll(
+        "input[type='radio'][name='time-slot']"
+    )
+    radios.forEach((radio) => {
+        const radioValue = +radio.value;
+        const isBooked = arr.includes(radioValue);
+
+        radio.disabled = isBooked;
+        if (isEqual && radioValue === timeMatch) {
+            addClass([radio], "active-user");
+        }
+    });
 };
 
 export const toggleClass = (arr, aClass) => {

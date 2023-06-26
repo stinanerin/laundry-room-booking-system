@@ -46,6 +46,7 @@ form {
         &[disabled] {
             cursor: not-allowed;
             background-color: $disabled-500;
+            background-color: red;
             position: relative;
             height: 13px;
             width: 13px;
@@ -60,10 +61,19 @@ form {
               background-color: $disabled-500;
             }
         }
-        
         &[disabled] + label {
             cursor: not-allowed;
             color: $disabled-50;
+        }
+        
+        // Auth users bookbooked time slot
+        &[disabled].active-user {
+            &:after {
+                background-color: $booked;
+            }
+        }
+        &[disabled].active-user + label {
+            color: rgba(218, 183, 243, 0.476);
         }
     }
     

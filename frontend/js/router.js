@@ -80,10 +80,10 @@ const router = async () => {
     }
 
     const userRes = await checkAuthentication();
-    console.log("userRes", userRes);
+    // console.log("userRes", userRes);
     const checkAuth = userRes.acknowledged;
 
-    console.log("checkAuth", checkAuth);
+    // console.log("checkAuth", checkAuth);
     const userIcons = document.querySelector("#userIcons");
     if (checkAuth) {
         userIcons.innerHTML = ` 
@@ -132,11 +132,8 @@ const router = async () => {
             console.log("ej auth match", match);
         }
     }
-    
 
-    
-
-    console.log("currentView", match.route);
+    // console.log("currentView", match.route);
     // Creates new instance of the view: importedClass - at the match route
     const currentView = new match.route.view();
 
