@@ -70,11 +70,11 @@
   }
   .button.danger-btn {
     background-color: hsl(354deg, 100%, 51%);
+    border: 2px solid hsl(354deg, 100%, 51%);
     color: hsl(0deg, 0%, 100%);
   }
   .button.danger-btn:hover:not(.button.danger-btn:hover:disabled, .button.danger-btn:hover.no-hover) {
     background-color: transparent;
-    border: 2px solid hsl(354deg, 100%, 51%);
   }
   .button:disabled {
     background-color: rgb(112, 112, 112);

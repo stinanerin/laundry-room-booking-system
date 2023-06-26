@@ -14,22 +14,24 @@ export default class extends AbstractView {
         const userBooking = booking.booking?.date;
 
         return `
+        <div class="text-center profile-container">
             <p>Welcome back <b>${toUpperCaseStr(userObj.user)}</b>!</p>
-        <div id="usersBookingInfo">
+            <div id="usersBookingInfo">
+                ${
+                    userBooking
+                        ? " <p>Your next laundry time is <b>" +
+                        dateToText(userBooking) +
+                        "</b></p>" +
+                        "<p>Do you want to book another time? Cancel your scheduled time below first.</p>"
+                        : " <p>You have no booked laundry times"
+                }</p>
+            </div>
             ${
                 userBooking
-                    ? " <p>Your next laundry time is <b>" +
-                      dateToText(userBooking) +
-                      "</b></p>" +
-                      "<p>Do you want to book another time? Cancel your scheduled time below first.</p>"
-                    : " <p>You have no booked laundry times"
-            }</p>
-        </div>
-        ${
-            userBooking
-                ? `<button id="delBookingBtn" class="button danger-btn" >Cancel</button>`
-                : ""
-        }`;
+                    ? `<button id="delBookingBtn" class="button danger-btn" >Cancel</button>`
+                    : ""
+            }
+        </div>`;
     }
     addEventListeners() {
         document
