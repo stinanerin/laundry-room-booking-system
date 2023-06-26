@@ -1,6 +1,7 @@
 import AbstractView from "./AbstractView.js";
 import { displayAlert } from "../components/alert.js";
 import { navigateTo } from "../router.js";
+import { validatePWD } from "../helper.js";
 
 import { addData } from "../api.js";
 
@@ -23,20 +24,22 @@ export default class extends AbstractView {
                                 <input class="form-control input" id="FullName" type="text" placeholder="Enter full name" required/>
                             </div>
 
+                            <div></div>
+
                             <!-- EMAIL -->
                             <div class="form-group">
                                 <label for="email" class="form-label">Email address</label>
                                 <input class="form-control input " id="email" type="email" placeholder="Enter email" required/>
-                                <div class="form-text">We'll propably share your email with everyone else.</div>
                             </div>
 
                             <!-- ALERT EMAIL -->
-                            <div id="emailAlert" class="m-0"></div>
+                            <div id="emailAlert" ></div>
 
                             <!-- PWD -->
                             <div class="form-group">
                                 <label for="pwd" class="form-label">Password</label>
                                 <input class="form-control input" id="pwd" type="password" placeholder="Enter password" required/>
+                                <div class="form-text">Your password needs to be 6 characters long.</div>
                             </div>
 
                             <!-- SUBMIT -->
@@ -54,9 +57,14 @@ export default class extends AbstractView {
                 </div>`;
     }
     addEventListeners() {
+        // ----------------------- REG. USER ACC. FORM -----------------------
         document
             .querySelector("#registerUser")
             .addEventListener("submit", (e) => this.registerUser(e));
+        // ----------------------- PWD INPUT VALIDATION -----------------------
+        document.querySelector("#pwd").addEventListener("input", (e) => {
+            validatePWD(e.target);
+        });
     }
     async registerUser(e) {
         e.preventDefault();
