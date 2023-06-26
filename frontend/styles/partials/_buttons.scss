@@ -16,11 +16,11 @@
     }
     &.danger-btn {
         background-color: $danger-500;
+        border: 2px solid $danger-500;
         color: $p-white;
         &:hover {
             &:not(&:disabled, &.no-hover ) {
                 background-color: transparent;
-                border: 2px solid $danger-500;
             }  
         }
     }
