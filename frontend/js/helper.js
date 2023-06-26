@@ -11,18 +11,29 @@ export const createElement = (type, aClass, str, arr) => {
     return elem;
 };
 
+export const validatePWD = (input) => {
+    console.log("hej", input.value);
+    const inputValue = input.value;
+    const charLimit = 6;
+
+    if (inputValue.length < charLimit) {
+        input.setCustomValidity(
+            `Password must be at least ${charLimit} characters long.`
+        );
+    } else {
+        input.setCustomValidity("");
+    }
+};
+
 //! todo - make dynamic
 export const disableElem = (arr, userBooking, currentDate) => {
-    const isEqual = areDatesEqual(
-        new Date(userBooking),
-        currentDate
-    );
+    const isEqual = areDatesEqual(new Date(userBooking), currentDate);
     const timeMatch = arr.find(
         (time) => time === new Date(userBooking).getHours()
     );
     const radios = document.querySelectorAll(
         "input[type='radio'][name='time-slot']"
-    )
+    );
     radios.forEach((radio) => {
         const radioValue = +radio.value;
         const isBooked = arr.includes(radioValue);
