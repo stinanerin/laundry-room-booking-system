@@ -2,7 +2,7 @@
 
 > [View API code](https://github.com/stormstina/booking-system-api)
 
-> [View laundry room booking application](https://laundry-room-booking-system-de2d4ba71aff.herokuapp.com)
+<!-- > [View laundry room booking application](https://laundry-room-booking-system-de2d4ba71aff.herokuapp.com) -->
 
 
 It's time we all entered the 21st century and left behind those old-fashioned laundry boards. With my system, you can easily book and cancel laundry times from anywhere.
